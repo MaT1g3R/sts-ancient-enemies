@@ -25,7 +25,7 @@ public class MonsterHelperPatch {
             switch (key) {
                 case "3 Sentries":
                 case "Sentries":
-                    return new MonsterGroup(new AbstractMonster[]{new AncientEnemies.monsters.exordium.Sentry(-330.0F, 25.0F), new AncientEnemies.monsters.exordium.Sentry(-85.0F, 10.0F), new AncientEnemies.monsters.exordium.Sentry(140.0F, 30.0F)});
+                    return new MonsterGroup(new AbstractMonster[]{new Sentry(-330.0F, 25.0F), new Sentry(-85.0F, 10.0F), new Sentry(140.0F, 30.0F)});
                 case "Sentry and Sphere":
                 case "City Ancients":
                     return new MonsterGroup(new AbstractMonster[]{new Sentry(-305.0F, 30.0F), new SphericGuardian()});

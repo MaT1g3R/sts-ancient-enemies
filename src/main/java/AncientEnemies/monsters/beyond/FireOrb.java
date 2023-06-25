@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.cards.status.Burn;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
@@ -33,6 +34,10 @@ public class FireOrb extends AbstractMonster {
                 MathUtils.random(16, 20), 0.0F, 0.0F, 120.0F, 120.0F, "AncientEnemies/fireball.png", x, y);
         this.damage.add(new DamageInfo((AbstractCreature) this, 9));
         this.damage.add(new DamageInfo((AbstractCreature) this, 25));
+    }
+
+    public void setImg() {
+        this.img = ImageMaster.loadImage("AncientEnemies/fireball.png");
     }
 
     private static final float HB_H = 120.0F;
