@@ -1,0 +1,9 @@
+{
+  "modid": "AncientEnemies",
+  "name": "Ancient Enemies",
+  "author_list": ["Byroniam"],
+  "description": "Every enemy becomes old",
+  "version": "1.0.0",
+  "sts_version": "12-18-2022",
+  "mts_version": "3.6.3"
+}
