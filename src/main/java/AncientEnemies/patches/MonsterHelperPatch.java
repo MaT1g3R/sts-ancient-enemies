@@ -9,6 +9,8 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.monsters.city.Chosen;
+import AncientEnemies.monsters.exordium.Cultist;
 
 public class MonsterHelperPatch {
     @SpirePatch2(clz = MonsterHelper.class, method = "getEncounter", paramtypez = {String.class})
@@ -23,6 +25,12 @@ public class MonsterHelperPatch {
 
         private static MonsterGroup getEncounter(String key) {
             switch (key) {
+                case "Cultist":
+                    return new MonsterGroup(new Cultist(0.0F, -10.0F));
+                case "Cultist and Chosen":
+                    return new MonsterGroup(new AbstractMonster[]{new Cultist(-230.0F, 15.0F, false), new Chosen(100.0F, 25.0F)});
+                case "3 Cultists":
+                    return new MonsterGroup(new AbstractMonster[]{new Cultist(-465.0F, -20.0F, false), new Cultist(-130.0F, 15.0F, false), new Cultist(200.0F, -5.0F)});
                 case "3 Sentries":
                 case "Sentries":
                     return new MonsterGroup(new AbstractMonster[]{new Sentry(-330.0F, 25.0F), new Sentry(-85.0F, 10.0F), new Sentry(140.0F, 30.0F)});
