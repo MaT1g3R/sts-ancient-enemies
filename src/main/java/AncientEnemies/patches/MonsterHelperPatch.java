@@ -104,6 +104,7 @@ public class MonsterHelperPatch {
                 case "SpikeSlime_L":
                     return new MonsterGroup(new SpikeSlime_L(0.0F, 0.0F, 0));
                 case "Ancient Shapes Weak":
+                case "3 Shapes":
                     return spawnShapes(true);
                 case "Spire Growth":
                     return new MonsterGroup(new Serpent());
