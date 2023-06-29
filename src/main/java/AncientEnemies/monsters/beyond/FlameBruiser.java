@@ -21,8 +21,6 @@ import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Iterator;
-
 public class FlameBruiser extends AbstractMonster {
     private static final Logger logger = LogManager.getLogger(FlameBruiser.class.getName());
     public static final String ID = "FlameBruiser";

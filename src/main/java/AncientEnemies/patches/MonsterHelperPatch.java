@@ -1,11 +1,10 @@
 package AncientEnemies.patches;
 
-import AncientEnemies.AncientEnemies;
 import AncientEnemies.monsters.beyond.*;
+import AncientEnemies.monsters.city.BookOfStabbing;
 import AncientEnemies.monsters.city.Champ;
-import AncientEnemies.monsters.exordium.Sentry;
 import AncientEnemies.monsters.city.SphericGuardian;
-import com.badlogic.gdx.math.MathUtils;
+import AncientEnemies.monsters.exordium.*;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -13,21 +12,8 @@ import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.monsters.city.Chosen;
-import AncientEnemies.monsters.exordium.Cultist;
-import AncientEnemies.monsters.exordium.AcidSlime_L;
-import AncientEnemies.monsters.exordium.SlimeBoss;
-import AncientEnemies.monsters.exordium.SpikeSlime_L;
-import AncientEnemies.monsters.exordium.SpikeSlime_M;
-import AncientEnemies.monsters.exordium.AcidSlime_M;
-import AncientEnemies.monsters.city.BookOfStabbing;
-import AncientEnemies.monsters.beyond.Exploder;
-import AncientEnemies.monsters.beyond.Repulsor;
-import AncientEnemies.monsters.beyond.Spiker;
-import java.util.Iterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import AncientEnemies.monsters.beyond.TimeEater;
-
 
 import java.util.ArrayList;
 
