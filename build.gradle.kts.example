@@ -10,8 +10,15 @@ Setup environment variables
     - NOTE: these compileOnlyLibs are not included in the JAR, so you will get runtime
       errors if you try and call code that won't exist on the client.
  */
+var steamappsLocation: String = ""
 var stsInstallLocation: String = ""
-var compileOnlyLibs: String = ""
+
+var workshopLocation: String = "$steamappsLocation/workshop/content/646570"
+
+var modTheSpireLocation: String = "$workshopLocation/1605060445/ModTheSpire.jar"
+var baseModLocation: String = "$workshopLocation/1605833019/BaseMod.jar"
+var stsJar: String = "$stsInstallLocation/desktop-1.0.jar"
+
 
 // Uses the value written in settings.gradle
 var modName: String = rootProject.name
@@ -21,8 +28,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly(fileTree(compileOnlyLibs))
+    compileOnly(files(modTheSpireLocation, baseModLocation, stsJar))
 }
+
 
 tasks.register("srcsets") {
     doLast {
