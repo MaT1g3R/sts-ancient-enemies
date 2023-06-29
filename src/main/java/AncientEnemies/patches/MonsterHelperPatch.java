@@ -59,20 +59,20 @@ public class MonsterHelperPatch {
         }
 
         int index = AbstractDungeon.miscRng.random(shapePool.size() - 1);
-        String key = (String)shapePool.get(index);
+        String key = shapePool.get(index);
         shapePool.remove(index);
         retVal[0] = getShape(key, -480.0F, 6.0F);
         index = AbstractDungeon.miscRng.random(shapePool.size() - 1);
-        key = (String)shapePool.get(index);
+        key = shapePool.get(index);
         shapePool.remove(index);
         retVal[1] = getShape(key, -240.0F, -6.0F);
         index = AbstractDungeon.miscRng.random(shapePool.size() - 1);
-        key = (String)shapePool.get(index);
+        key = shapePool.get(index);
         shapePool.remove(index);
         retVal[2] = getShape(key, 0.0F, -12.0F);
         if (!weak) {
             index = AbstractDungeon.miscRng.random(shapePool.size() - 1);
-            key = (String)shapePool.get(index);
+            key = shapePool.get(index);
             shapePool.remove(index);
             retVal[3] = getShape(key, 240.0F, 12.0F);
         }
@@ -80,7 +80,6 @@ public class MonsterHelperPatch {
         return new MonsterGroup(retVal);
     }
     @SpirePatch2(clz = MonsterHelper.class, method = "getEncounter", paramtypez = {String.class})
-
     static class GetEncounter {
         public static SpireReturn<MonsterGroup> Prefix(String key) {
             MonsterGroup monsterGroup = getEncounter(key);

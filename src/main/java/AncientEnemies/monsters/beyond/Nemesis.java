@@ -1,6 +1,6 @@
 package AncientEnemies.monsters.beyond;
 
-import AncientEnemies.patches.IntangiblePowerPatch;
+import AncientEnemies.powers.IntangiblePower;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
@@ -65,7 +65,7 @@ public class Nemesis extends AbstractMonster {
     }
 
     public void usePreBattleAction() {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new IntangiblePowerPatch(this)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new IntangiblePower(this)));
     }
 
     public void takeTurn() {

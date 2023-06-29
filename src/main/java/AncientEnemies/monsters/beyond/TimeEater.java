@@ -1,6 +1,6 @@
 package AncientEnemies.monsters.beyond;
 
-import AncientEnemies.patches.TimeWarpPowerPatch;
+import AncientEnemies.powers.TimeWarpPower;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
@@ -57,7 +57,7 @@ public class TimeEater extends AbstractMonster {
         AbstractDungeon.scene.fadeOutAmbiance();
         AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_BEYOND");
         UnlockTracker.markBossAsSeen("WIZARD");
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new TimeWarpPowerPatch(this)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new TimeWarpPower(this)));
     }
 
     public void takeTurn() {

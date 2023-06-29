@@ -1,4 +1,4 @@
-package AncientEnemies.patches;
+package AncientEnemies.powers;
 
 
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -7,14 +7,21 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class IntangiblePowerPatch extends AbstractPower {
+public class IntangiblePower extends AbstractPower {
     public static final String POWER_ID = "Intangible";
-    private static final PowerStrings powerStrings;
     public static final String NAME;
     public static final String[] DESCRIPTIONS;
+    private static final PowerStrings powerStrings;
+
+    static {
+        powerStrings = CardCrawlGame.languagePack.getPowerStrings("Intangible");
+        NAME = powerStrings.NAME;
+        DESCRIPTIONS = powerStrings.DESCRIPTIONS;
+    }
+
     private boolean justApplied;
 
-    public IntangiblePowerPatch(AbstractCreature owner) {
+    public IntangiblePower(AbstractCreature owner) {
         this.name = NAME;
         this.ID = "Intangible";
         this.owner = owner;
@@ -44,17 +51,12 @@ public class IntangiblePowerPatch extends AbstractPower {
         if (this.justApplied) {
             this.justApplied = false;
         } else {
-             {
-            }  {
+            {
+            }
+            {
 
             }
 
         }
-    }
-
-    static {
-        powerStrings = CardCrawlGame.languagePack.getPowerStrings("Intangible");
-        NAME = powerStrings.NAME;
-        DESCRIPTIONS = powerStrings.DESCRIPTIONS;
     }
 }

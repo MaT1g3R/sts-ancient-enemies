@@ -1,6 +1,6 @@
 package AncientEnemies.monsters.city;
 
-import AncientEnemies.patches.ShriekPowerPatch;
+import AncientEnemies.powers.ShriekPower;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -52,7 +52,7 @@ public class BookOfStabbing extends AbstractMonster {
     }
 
     public void usePreBattleAction() {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ShriekPowerPatch(this)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ShriekPower(this)));
     }
 
     public void takeTurn() {

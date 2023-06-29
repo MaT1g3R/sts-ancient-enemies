@@ -1,8 +1,8 @@
 package AncientEnemies.monsters.beyond;
 
 import AncientEnemies.monsters.exordium.Cultist;
-import AncientEnemies.patches.DarknessPowerPatch;
-import AncientEnemies.patches.RegeneratePowerPatch;
+import AncientEnemies.powers.DarknessPower;
+import AncientEnemies.powers.RegeneratePower;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -114,7 +114,7 @@ public class AwakenedOne extends AbstractMonster {
         AbstractDungeon.scene.fadeOutAmbiance();
         AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_BEYOND");
         AbstractDungeon.getCurrRoom().cannotLose = true;
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RegeneratePowerPatch(this, 10)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RegeneratePower(this, 10)));
         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new CuriosityPower(this, 3)));
         UnlockTracker.markBossAsSeen("CROW");
     }
@@ -155,7 +155,7 @@ public class AwakenedOne extends AbstractMonster {
             case 6:
                 AbstractDungeon.actionManager.addToBottom(new AnimateFastAttackAction(this));
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(3), AttackEffect.POISON));
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DarknessPowerPatch(1), 1));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DarknessPower(1), 1));
                 break;
             case 7:
                 AbstractDungeon.actionManager.addToBottom(new RemoveDebuffsAction(this));

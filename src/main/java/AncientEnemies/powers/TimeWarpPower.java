@@ -1,4 +1,4 @@
-package AncientEnemies.patches;
+package AncientEnemies.powers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -14,13 +14,19 @@ import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 
 import java.util.Iterator;
 
-public class TimeWarpPowerPatch extends AbstractPower {
+public class TimeWarpPower extends AbstractPower {
     public static final String POWER_ID = "Time Warp";
-    private static final PowerStrings powerStrings;
     public static final String NAME;
     public static final String[] DESCRIPTIONS;
+    private static final PowerStrings powerStrings;
 
-    public TimeWarpPowerPatch(AbstractCreature owner) {
+    static {
+        powerStrings = CardCrawlGame.languagePack.getPowerStrings("Time Warp");
+        NAME = powerStrings.NAME;
+        DESCRIPTIONS = powerStrings.DESCRIPTIONS;
+    }
+
+    public TimeWarpPower(AbstractCreature owner) {
         this.name = NAME;
         this.ID = "Time Warp";
         this.owner = owner;
@@ -42,8 +48,8 @@ public class TimeWarpPowerPatch extends AbstractPower {
             AbstractDungeon.actionManager.cardQueue.clear();
             Iterator var3 = AbstractDungeon.player.limbo.group.iterator();
 
-            while(var3.hasNext()) {
-                AbstractCard c = (AbstractCard)var3.next();
+            while (var3.hasNext()) {
+                AbstractCard c = (AbstractCard) var3.next();
                 AbstractDungeon.effectList.add(new ExhaustCardEffect(c));
             }
 
@@ -52,18 +58,12 @@ public class TimeWarpPowerPatch extends AbstractPower {
             AbstractDungeon.overlayMenu.endTurnButton.disable(true);
             var3 = AbstractDungeon.getMonsters().monsters.iterator();
 
-            while(var3.hasNext()) {
-                AbstractMonster m = (AbstractMonster)var3.next();
+            while (var3.hasNext()) {
+                AbstractMonster m = (AbstractMonster) var3.next();
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, m, new StrengthPower(m, 3), 3));
             }
         }
 
         this.updateDescription();
-    }
-
-    static {
-        powerStrings = CardCrawlGame.languagePack.getPowerStrings("Time Warp");
-        NAME = powerStrings.NAME;
-        DESCRIPTIONS = powerStrings.DESCRIPTIONS;
     }
 }

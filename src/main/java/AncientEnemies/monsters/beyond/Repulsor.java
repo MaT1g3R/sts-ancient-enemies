@@ -1,7 +1,7 @@
 package AncientEnemies.monsters.beyond;
 
 
-import AncientEnemies.patches.RepulsePowerPatch;
+import AncientEnemies.powers.RepulsePower;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -49,7 +49,7 @@ public class Repulsor extends AbstractMonster {
     }
 
     public void usePreBattleAction() {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RepulsePowerPatch(this)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RepulsePower(this)));
     }
 
     public void takeTurn() {

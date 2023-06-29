@@ -1,4 +1,4 @@
-package AncientEnemies.patches;
+package AncientEnemies.powers;
 
 import com.megacrit.cardcrawl.actions.common.DiscardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -12,13 +12,19 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class ShriekPowerPatch extends AbstractPower {
+public class ShriekPower extends AbstractPower {
     public static final String POWER_ID = "Shriek From Beyond";
-    private static final PowerStrings powerStrings;
     public static final String NAME;
     public static final String[] DESCRIPTIONS;
+    private static final PowerStrings powerStrings;
 
-    public ShriekPowerPatch(AbstractCreature owner) {
+    static {
+        powerStrings = CardCrawlGame.languagePack.getPowerStrings("Shriek From Beyond");
+        NAME = powerStrings.NAME;
+        DESCRIPTIONS = powerStrings.DESCRIPTIONS;
+    }
+
+    public ShriekPower(AbstractCreature owner) {
         this.name = NAME;
         this.ID = "Shriek From Beyond";
         this.owner = owner;
@@ -38,11 +44,5 @@ public class ShriekPowerPatch extends AbstractPower {
             AbstractDungeon.actionManager.addToBottom(new DiscardAction(AbstractDungeon.player, this.owner, 1, true, false));
         }
 
-    }
-
-    static {
-        powerStrings = CardCrawlGame.languagePack.getPowerStrings("Shriek From Beyond");
-        NAME = powerStrings.NAME;
-        DESCRIPTIONS = powerStrings.DESCRIPTIONS;
     }
 }

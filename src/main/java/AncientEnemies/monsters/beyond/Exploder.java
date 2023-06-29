@@ -1,6 +1,6 @@
 package AncientEnemies.monsters.beyond;
 
-import AncientEnemies.patches.ExplosivePowerPatch;
+import AncientEnemies.powers.ExplosivePower;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -42,7 +42,7 @@ public class Exploder extends AbstractMonster {
     }
 
     public void usePreBattleAction() {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ExplosivePowerPatch(this, 8)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ExplosivePower(this, 8)));
     }
 
     public void takeTurn() {
@@ -52,7 +52,7 @@ public class Exploder extends AbstractMonster {
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.FIRE));
                 break;
             case 2:
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ExplosivePowerPatch(this, 4), 4));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ExplosivePower(this, 4), 4));
         }
 
         AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
