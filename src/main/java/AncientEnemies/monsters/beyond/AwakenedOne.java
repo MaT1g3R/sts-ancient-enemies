@@ -81,7 +81,7 @@ public class AwakenedOne extends AbstractMonster {
     private ArrayList<AwakenedWingParticle> wParticles = new ArrayList();
 
     public AwakenedOne(float x, float y) {
-        super(NAME, "AwakenedOne", 300, 40.0F, -30.0F, 460.0F, 250.0F, (String)null, x, y);
+        super(NAME, "AwakenedOne", 300, 40.0F, -30.0F, 460.0F, 250.0F, (String) null, x, y);
         this.loadAnimation("images/monsters/theForest/awakenedOne/skeleton.atlas", "images/monsters/theForest/awakenedOne/skeleton.json", 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle_1", true);
         e.setTime(e.getEndTime() * MathUtils.random());
@@ -93,8 +93,8 @@ public class AwakenedOne extends AbstractMonster {
         this.eye = this.skeleton.findBone("Eye");
         Iterator var4 = this.skeleton.getBones().iterator();
 
-        while(var4.hasNext()) {
-            Bone b = (Bone)var4.next();
+        while (var4.hasNext()) {
+            Bone b = (Bone) var4.next();
             logger.info(b.getData().getName());
         }
 
@@ -125,17 +125,17 @@ public class AwakenedOne extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.SLASH_DIAGONAL));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(0), AttackEffect.SLASH_DIAGONAL));
                 break;
             case 2:
                 i = 0;
 
-                while(true) {
+                while (true) {
                     if (i >= 3) {
                         break label28;
                     }
 
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(1), AttackEffect.FIRE));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(1), AttackEffect.FIRE));
                     ++i;
                 }
             case 3:
@@ -150,19 +150,19 @@ public class AwakenedOne extends AbstractMonster {
                 AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_AWAKENEDONE_3"));
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ShockWaveEffect(this.hb.cX, this.hb.cY, new Color(0.1F, 0.0F, 0.2F, 1.0F), ShockWaveType.CHAOTIC), 0.3F));
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ShockWaveEffect(this.hb.cX, this.hb.cY, new Color(0.3F, 0.2F, 0.4F, 1.0F), ShockWaveType.CHAOTIC), 1.0F));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(2), AttackEffect.SMASH));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(2), AttackEffect.SMASH));
                 break;
             case 6:
                 AbstractDungeon.actionManager.addToBottom(new AnimateFastAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(3), AttackEffect.POISON));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(3), AttackEffect.POISON));
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DarknessPower(1), 1));
                 break;
             case 7:
                 AbstractDungeon.actionManager.addToBottom(new RemoveDebuffsAction(this));
                 break;
             case 8:
-                for(i = 0; i < 2; ++i) {
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(4), AttackEffect.FIRE));
+                for (i = 0; i < 2; ++i) {
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(4), AttackEffect.FIRE));
                 }
         }
 
@@ -171,53 +171,51 @@ public class AwakenedOne extends AbstractMonster {
 
     public void changeState(String key) {
         this.maxHealth = 200;
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "Attack_1", false);
-        // LOOK INTO IMPLEMENTING: AnimationState.TrackEntry e = this.state.setAnimation(0, "growingwings", true);
-        e.setTimeScale(0.2F);
+        this.state.setAnimation(0, "Idle_2", true);
         this.halfDead = false;
         this.animateParticles = true;
-        AbstractDungeon.actionManager.addToBottom(new HealAction(this, this, 200));
+        AbstractDungeon.actionManager.addToBottom(new HealAction(this, this, this.maxHealth));
         AbstractDungeon.actionManager.addToBottom(new CanLoseAction());
     }
 
     protected void getMove(int num) {
         if (this.form1) {
             if (this.firstTurn) {
-                this.setMove((byte)1, Intent.ATTACK, 10);
+                this.setMove((byte) 1, Intent.ATTACK, 10);
                 this.firstTurn = false;
                 return;
             }
 
             if (num < 25) {
-                if (!this.lastMove((byte)2)) {
-                    this.setMove(SS_NAME, (byte)2, Intent.ATTACK, 6, 3, true);
+                if (!this.lastMove((byte) 2)) {
+                    this.setMove(SS_NAME, (byte) 2, Intent.ATTACK, 6, 3, true);
                 } else {
-                    this.setMove((byte)1, Intent.ATTACK, 10);
+                    this.setMove((byte) 1, Intent.ATTACK, 10);
                 }
-            } else if (!this.lastTwoMoves((byte)1)) {
-                this.setMove((byte)1, Intent.ATTACK, 10);
+            } else if (!this.lastTwoMoves((byte) 1)) {
+                this.setMove((byte) 1, Intent.ATTACK, 10);
             } else {
-                this.setMove(SS_NAME, (byte)2, Intent.ATTACK, 6, 3, true);
+                this.setMove(SS_NAME, (byte) 2, Intent.ATTACK, 6, 3, true);
             }
         } else {
             if (this.firstTurn) {
-                this.setMove(DARK_ECHO_NAME, (byte)5, Intent.ATTACK, 40);
+                this.setMove(DARK_ECHO_NAME, (byte) 5, Intent.ATTACK, 40);
                 return;
             }
 
             if (this.powers.size() > 2 && this.cleanseCount != 0) {
                 --this.cleanseCount;
-                this.setMove(CLEANSE_NAME, (byte)7, Intent.BUFF);
+                this.setMove(CLEANSE_NAME, (byte) 7, Intent.BUFF);
             } else if (num < 50) {
-                if (!this.lastTwoMoves((byte)6)) {
-                    this.setMove(SLUDGE_NAME, (byte)6, Intent.ATTACK_DEBUFF, 16);
+                if (!this.lastTwoMoves((byte) 6)) {
+                    this.setMove(SLUDGE_NAME, (byte) 6, Intent.ATTACK_DEBUFF, 16);
                 } else {
-                    this.setMove((byte)8, Intent.ATTACK, 12, 2, true);
+                    this.setMove((byte) 8, Intent.ATTACK, 12, 2, true);
                 }
-            } else if (!this.lastTwoMoves((byte)8)) {
-                this.setMove((byte)8, Intent.ATTACK, 12, 2, true);
+            } else if (!this.lastTwoMoves((byte) 8)) {
+                this.setMove((byte) 8, Intent.ATTACK, 12, 2, true);
             } else {
-                this.setMove(SLUDGE_NAME, (byte)6, Intent.ATTACK_DEBUFF, 16);
+                this.setMove(SLUDGE_NAME, (byte) 6, Intent.ATTACK_DEBUFF, 16);
             }
         }
 
@@ -229,17 +227,17 @@ public class AwakenedOne extends AbstractMonster {
             this.halfDead = true;
             Iterator var2 = AbstractDungeon.player.relics.iterator();
 
-            while(var2.hasNext()) {
-                AbstractRelic r = (AbstractRelic)var2.next();
+            while (var2.hasNext()) {
+                AbstractRelic r = (AbstractRelic) var2.next();
                 r.onMonsterDeath(this);
             }
 
             AbstractDungeon.actionManager.addToTop(new ClearCardQueueAction());
             this.powers.clear();
-            this.setMove((byte)3, Intent.UNKNOWN);
+            this.setMove((byte) 3, Intent.UNKNOWN);
             this.createIntent();
             AbstractDungeon.actionManager.addToBottom(new ShoutAction(this, DIALOG[0]));
-            AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, (byte)3, Intent.UNKNOWN));
+            AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, (byte) 3, Intent.UNKNOWN));
             this.firstTurn = true;
             this.form1 = false;
         }
@@ -258,8 +256,8 @@ public class AwakenedOne extends AbstractMonster {
 
             Iterator var1 = AbstractDungeon.getCurrRoom().monsters.monsters.iterator();
 
-            while(var1.hasNext()) {
-                AbstractMonster m = (AbstractMonster)var1.next();
+            while (var1.hasNext()) {
+                AbstractMonster m = (AbstractMonster) var1.next();
                 if (!m.isDying && m instanceof Cultist) {
                     AbstractDungeon.actionManager.addToBottom(new EscapeAction(m));
                 }
@@ -285,8 +283,8 @@ public class AwakenedOne extends AbstractMonster {
 
         Iterator<AwakenedWingParticle> p = this.wParticles.iterator();
 
-        while(p.hasNext()) {
-            AwakenedWingParticle e = (AwakenedWingParticle)p.next();
+        while (p.hasNext()) {
+            AwakenedWingParticle e = (AwakenedWingParticle) p.next();
             e.update();
             if (e.isDone) {
                 p.remove();
@@ -299,8 +297,8 @@ public class AwakenedOne extends AbstractMonster {
         Iterator var2 = this.wParticles.iterator();
 
         AwakenedWingParticle p;
-        while(var2.hasNext()) {
-            p = (AwakenedWingParticle)var2.next();
+        while (var2.hasNext()) {
+            p = (AwakenedWingParticle) var2.next();
             if (p.renderBehind) {
                 p.render(sb, this.skeleton.getX() + this.back.getWorldX(), this.skeleton.getY() + this.back.getWorldY());
             }
@@ -309,8 +307,8 @@ public class AwakenedOne extends AbstractMonster {
         super.render(sb);
         var2 = this.wParticles.iterator();
 
-        while(var2.hasNext()) {
-            p = (AwakenedWingParticle)var2.next();
+        while (var2.hasNext()) {
+            p = (AwakenedWingParticle) var2.next();
             if (!p.renderBehind) {
                 p.render(sb, this.skeleton.getX() + this.back.getWorldX(), this.skeleton.getY() + this.back.getWorldY());
             }
