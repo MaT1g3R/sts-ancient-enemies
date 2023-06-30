@@ -23,12 +23,12 @@ import java.util.Iterator;
 
 public class Repulsor extends AbstractMonster {
     public static final String ID = "Repulsor";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
     public static final String ENCOUNTER_NAME_W = "Ancient Shapes Weak";
     public static final String ENCOUNTER_NAME = "Ancient Shapes";
+    private static final MonsterStrings monsterStrings;
     private static final int HP_MAX = 34;
     private static final int HP_MIN = 30;
     private static final float HB_X = -8.0F;
@@ -40,8 +40,15 @@ public class Repulsor extends AbstractMonster {
     private static final byte ATTACK = 2;
     private static final int ATTACK_DMG = 8;
 
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Repulsor");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+    }
+
     public Repulsor(float x, float y) {
-        super(NAME, "Repulsor", MathUtils.random(30, 34), -8.0F, -10.0F, 150.0F, 150.0F, (String)null, x, y + 10.0F);
+        super(NAME, "Repulsor", MathUtils.random(30, 34), -8.0F, -10.0F, 150.0F, 150.0F, null, x, y + 10.0F);
         this.loadAnimation("images/monsters/theForest/repulser/skeleton.atlas", "images/monsters/theForest/repulser/skeleton.json", 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
@@ -58,19 +65,19 @@ public class Repulsor extends AbstractMonster {
             case 1:
                 Iterator var1 = AbstractDungeon.getCurrRoom().monsters.monsters.iterator();
 
-                while(true) {
+                while (true) {
                     if (!var1.hasNext()) {
                         break label23;
                     }
 
-                    AbstractMonster m = (AbstractMonster)var1.next();
+                    AbstractMonster m = (AbstractMonster) var1.next();
                     if (!m.isDead && !m.isDying && !m.isEscaping) {
                         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, this, new StrengthPower(m, 3), 3));
                     }
                 }
             case 2:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.SLASH_HORIZONTAL));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.SLASH_HORIZONTAL));
         }
 
         AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
@@ -85,17 +92,10 @@ public class Repulsor extends AbstractMonster {
     }
 
     protected void getMove(int num) {
-        if (num < 20 && !this.lastMove((byte)2)) {
-            this.setMove((byte)2, Intent.ATTACK, ((DamageInfo)this.damage.get(0)).base);
+        if (num < 20 && !this.lastMove((byte) 2)) {
+            this.setMove((byte) 2, Intent.ATTACK, this.damage.get(0).base);
         } else {
-            this.setMove((byte)1, Intent.BUFF);
+            this.setMove((byte) 1, Intent.BUFF);
         }
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Repulsor");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
     }
 }

@@ -29,7 +29,6 @@ import java.util.Iterator;
 
 public class SpikeSlime_L extends AbstractMonster {
     public static final String ID = "SpikeSlime_L";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
@@ -38,13 +37,24 @@ public class SpikeSlime_L extends AbstractMonster {
     public static final int TACKLE_DAMAGE = 16;
     public static final int FRAIL_TURNS = 2;
     public static final int WOUND_COUNT = 2;
+    private static final MonsterStrings monsterStrings;
     private static final byte FLAME_TACKLE = 1;
     private static final byte SPLIT = 3;
     private static final byte FRAIL_LICK = 4;
     private static final String FRAIL_NAME;
     private static final String SPLIT_NAME;
-    private float saveX;
-    private float saveY;
+
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("SpikeSlime_L");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+        FRAIL_NAME = MOVES[0];
+        SPLIT_NAME = MOVES[1];
+    }
+
+    private final float saveX;
+    private final float saveY;
     private boolean firstTurn;
     private boolean splitTriggered;
 
@@ -53,7 +63,7 @@ public class SpikeSlime_L extends AbstractMonster {
     }
 
     public SpikeSlime_L(float x, float y, int poisonAmount, int newHealth) {
-        super(NAME, "SpikeSlime_L", newHealth, 0.0F, -30.0F, 300.0F, 180.0F, (String)null, x, y);
+        super(NAME, "SpikeSlime_L", newHealth, 0.0F, -30.0F, 300.0F, 180.0F, null, x, y);
         this.firstTurn = true;
         this.saveX = x;
         this.saveY = y;
@@ -73,7 +83,7 @@ public class SpikeSlime_L extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.BLUNT_HEAVY));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.BLUNT_HEAVY));
                 AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new Wound(), 2));
             case 2:
             default:
@@ -88,7 +98,7 @@ public class SpikeSlime_L extends AbstractMonster {
                 AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new AncientEnemies.monsters.exordium.SpikeSlime_M(this.saveX - 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
                 AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new SpikeSlime_M(this.saveX + 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
                 AbstractDungeon.actionManager.addToBottom(new CanLoseAction());
-                this.setMove(SPLIT_NAME, (byte)3, Intent.UNKNOWN);
+                this.setMove(SPLIT_NAME, (byte) 3, Intent.UNKNOWN);
                 break;
             case 4:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
@@ -100,11 +110,11 @@ public class SpikeSlime_L extends AbstractMonster {
 
     public void damage(DamageInfo info) {
         super.damage(info);
-        if (!this.isDying && (float)this.currentHealth < (float)this.maxHealth / 2.0F && this.nextMove != 3 && !this.splitTriggered) {
-            this.setMove(SPLIT_NAME, (byte)3, Intent.UNKNOWN);
+        if (!this.isDying && (float) this.currentHealth < (float) this.maxHealth / 2.0F && this.nextMove != 3 && !this.splitTriggered) {
+            this.setMove(SPLIT_NAME, (byte) 3, Intent.UNKNOWN);
             this.createIntent();
             AbstractDungeon.actionManager.addToBottom(new TextAboveCreatureAction(this, DIALOG[0]));
-            AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, SPLIT_NAME, (byte)3, Intent.UNKNOWN));
+            AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, SPLIT_NAME, (byte) 3, Intent.UNKNOWN));
             this.splitTriggered = true;
         }
 
@@ -117,15 +127,15 @@ public class SpikeSlime_L extends AbstractMonster {
         }
 
         if (num < 30) {
-            if (this.lastTwoMoves((byte)1)) {
-                this.setMove(FRAIL_NAME, (byte)4, Intent.DEBUFF);
+            if (this.lastTwoMoves((byte) 1)) {
+                this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
             } else {
-                this.setMove((byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+                this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
             }
-        } else if (this.lastTwoMoves((byte)4)) {
-            this.setMove((byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+        } else if (this.lastTwoMoves((byte) 4)) {
+            this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
         } else {
-            this.setMove(FRAIL_NAME, (byte)4, Intent.DEBUFF);
+            this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
         }
 
     }
@@ -145,17 +155,8 @@ public class SpikeSlime_L extends AbstractMonster {
                 return;
             }
 
-            a = (AbstractGameAction)var1.next();
-        } while(!(a instanceof SpawnMonsterAction));
+            a = (AbstractGameAction) var1.next();
+        } while (!(a instanceof SpawnMonsterAction));
 
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("SpikeSlime_L");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
-        FRAIL_NAME = MOVES[0];
-        SPLIT_NAME = MOVES[1];
     }
 }

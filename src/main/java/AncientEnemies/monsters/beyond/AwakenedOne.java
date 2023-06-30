@@ -41,18 +41,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AwakenedOne extends AbstractMonster {
-    private static final Logger logger = LogManager.getLogger(AwakenedOne.class.getName());
     public static final String ID = "AwakenedOne";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
     public static final int STAGE_1_HP = 300;
     public static final int STAGE_2_HP = 200;
-    private boolean form1 = true;
-    private boolean firstTurn = true;
-    private boolean saidPower = false;
-    private int cleanseCount = 3;
+    private static final Logger logger = LogManager.getLogger(AwakenedOne.class.getName());
+    private static final MonsterStrings monsterStrings;
     private static final byte SLASH = 1;
     private static final byte SOUL_STRIKE = 2;
     private static final byte REBIRTH = 3;
@@ -73,15 +69,31 @@ public class AwakenedOne extends AbstractMonster {
     private static final int SLUDGE_DMG = 16;
     private static final int TACKLE_DMG = 12;
     private static final int TACKLE_AMT = 2;
-    private float fireTimer = 0.0F;
     private static final float FIRE_TIME = 0.1F;
-    private Bone eye;
-    private Bone back;
+
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("AwakenedOne");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+        SS_NAME = MOVES[0];
+        DARK_ECHO_NAME = MOVES[1];
+        CLEANSE_NAME = MOVES[2];
+        SLUDGE_NAME = MOVES[3];
+    }
+
+    private boolean form1 = true;
+    private boolean firstTurn = true;
+    private final boolean saidPower = false;
+    private int cleanseCount = 3;
+    private float fireTimer = 0.0F;
+    private final Bone eye;
+    private final Bone back;
     private boolean animateParticles = false;
-    private ArrayList<AwakenedWingParticle> wParticles = new ArrayList();
+    private final ArrayList<AwakenedWingParticle> wParticles = new ArrayList();
 
     public AwakenedOne(float x, float y) {
-        super(NAME, "AwakenedOne", 300, 40.0F, -30.0F, 460.0F, 250.0F, (String) null, x, y);
+        super(NAME, "AwakenedOne", 300, 40.0F, -30.0F, 460.0F, 250.0F, null, x, y);
         this.loadAnimation("images/monsters/theForest/awakenedOne/skeleton.atlas", "images/monsters/theForest/awakenedOne/skeleton.json", 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle_1", true);
         e.setTime(e.getEndTime() * MathUtils.random());
@@ -125,7 +137,7 @@ public class AwakenedOne extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(0), AttackEffect.SLASH_DIAGONAL));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.SLASH_DIAGONAL));
                 break;
             case 2:
                 i = 0;
@@ -135,7 +147,7 @@ public class AwakenedOne extends AbstractMonster {
                         break label28;
                     }
 
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(1), AttackEffect.FIRE));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(1), AttackEffect.FIRE));
                     ++i;
                 }
             case 3:
@@ -150,11 +162,11 @@ public class AwakenedOne extends AbstractMonster {
                 AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_AWAKENEDONE_3"));
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ShockWaveEffect(this.hb.cX, this.hb.cY, new Color(0.1F, 0.0F, 0.2F, 1.0F), ShockWaveType.CHAOTIC), 0.3F));
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ShockWaveEffect(this.hb.cX, this.hb.cY, new Color(0.3F, 0.2F, 0.4F, 1.0F), ShockWaveType.CHAOTIC), 1.0F));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(2), AttackEffect.SMASH));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(2), AttackEffect.SMASH));
                 break;
             case 6:
                 AbstractDungeon.actionManager.addToBottom(new AnimateFastAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(3), AttackEffect.POISON));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(3), AttackEffect.POISON));
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DarknessPower(1), 1));
                 break;
             case 7:
@@ -162,7 +174,7 @@ public class AwakenedOne extends AbstractMonster {
                 break;
             case 8:
                 for (i = 0; i < 2; ++i) {
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo) this.damage.get(4), AttackEffect.FIRE));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(4), AttackEffect.FIRE));
                 }
         }
 
@@ -284,7 +296,7 @@ public class AwakenedOne extends AbstractMonster {
         Iterator<AwakenedWingParticle> p = this.wParticles.iterator();
 
         while (p.hasNext()) {
-            AwakenedWingParticle e = (AwakenedWingParticle) p.next();
+            AwakenedWingParticle e = p.next();
             e.update();
             if (e.isDone) {
                 p.remove();
@@ -314,16 +326,5 @@ public class AwakenedOne extends AbstractMonster {
             }
         }
 
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("AwakenedOne");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
-        SS_NAME = MOVES[0];
-        DARK_ECHO_NAME = MOVES[1];
-        CLEANSE_NAME = MOVES[2];
-        SLUDGE_NAME = MOVES[3];
     }
 }

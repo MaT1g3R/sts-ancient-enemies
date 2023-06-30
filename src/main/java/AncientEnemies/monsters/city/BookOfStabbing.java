@@ -19,12 +19,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BookOfStabbing extends AbstractMonster {
-    private static final Logger logger = LogManager.getLogger(BookOfStabbing.class.getName());
     public static final String ID = "BookOfStabbing";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
+    private static final Logger logger = LogManager.getLogger(BookOfStabbing.class.getName());
+    private static final MonsterStrings monsterStrings;
     private static final int HP_MAX = 150;
     private static final int HP_MIN = 145;
     private static final int SIPHON_DAMAGE = 25;
@@ -36,11 +36,19 @@ public class BookOfStabbing extends AbstractMonster {
     private static final byte THRASH = 2;
     private static final byte LAUGH = 3;
     private static final byte UNLEASH = 4;
+
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("BookOfStabbing");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+    }
+
     private boolean unleashed = false;
     private boolean firstMove = true;
 
     public BookOfStabbing() {
-        super(NAME, "BookOfStabbing", MathUtils.random(145, 150), 0.0F, -30.0F, 320.0F, 410.0F, (String)null, 0.0F, 15.0F);
+        super(NAME, "BookOfStabbing", MathUtils.random(145, 150), 0.0F, -30.0F, 320.0F, 410.0F, null, 0.0F, 15.0F);
         this.loadAnimation("images/monsters/theCity/bookOfStabbing/skeleton.atlas", "images/monsters/theCity/bookOfStabbing/skeleton.json", 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "finger_wiggle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
@@ -59,18 +67,18 @@ public class BookOfStabbing extends AbstractMonster {
         label18:
         switch (this.nextMove) {
             case 1:
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.SLASH_VERTICAL));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.SLASH_VERTICAL));
                 break;
             case 2:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
                 int i = 0;
 
-                while(true) {
+                while (true) {
                     if (i >= 3) {
                         break label18;
                     }
 
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(1), AttackEffect.BLUNT_HEAVY));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(1), AttackEffect.BLUNT_HEAVY));
                     ++i;
                 }
             case 3:
@@ -122,39 +130,39 @@ public class BookOfStabbing extends AbstractMonster {
     protected void getMove(int num) {
         if (!this.unleashed && this.currentHealth < this.maxHealth / 2) {
             this.unleashed = true;
-            this.setMove((byte)4, Intent.DEFEND_BUFF);
+            this.setMove((byte) 4, Intent.DEFEND_BUFF);
         } else if (this.firstMove) {
             this.firstMove = false;
-            this.setMove((byte)3, Intent.STRONG_DEBUFF);
+            this.setMove((byte) 3, Intent.STRONG_DEBUFF);
         } else {
             if (num < 25) {
-                if (this.lastMove((byte)2)) {
+                if (this.lastMove((byte) 2)) {
                     if (MathUtils.randomBoolean(0.66F)) {
-                        this.setMove((byte)1, Intent.ATTACK, 25);
+                        this.setMove((byte) 1, Intent.ATTACK, 25);
                     } else {
-                        this.setMove((byte)3, Intent.STRONG_DEBUFF);
+                        this.setMove((byte) 3, Intent.STRONG_DEBUFF);
                     }
                 } else {
-                    this.setMove((byte)2, Intent.ATTACK, 5, 3, true);
+                    this.setMove((byte) 2, Intent.ATTACK, 5, 3, true);
                 }
             } else if (num < 70) {
-                if (this.lastTwoMoves((byte)1)) {
+                if (this.lastTwoMoves((byte) 1)) {
                     if (MathUtils.randomBoolean(0.3846F)) {
-                        this.setMove((byte)2, Intent.ATTACK, 5, 3, true);
+                        this.setMove((byte) 2, Intent.ATTACK, 5, 3, true);
                     } else {
-                        this.setMove((byte)3, Intent.STRONG_DEBUFF);
+                        this.setMove((byte) 3, Intent.STRONG_DEBUFF);
                     }
                 } else {
-                    this.setMove((byte)1, Intent.ATTACK, 25);
+                    this.setMove((byte) 1, Intent.ATTACK, 25);
                 }
-            } else if (this.lastTwoMoves((byte)3)) {
+            } else if (this.lastTwoMoves((byte) 3)) {
                 if (MathUtils.randomBoolean(0.4545F)) {
-                    this.setMove((byte)2, Intent.ATTACK, 5, 3, true);
+                    this.setMove((byte) 2, Intent.ATTACK, 5, 3, true);
                 } else {
-                    this.setMove((byte)1, Intent.ATTACK, 25);
+                    this.setMove((byte) 1, Intent.ATTACK, 25);
                 }
             } else {
-                this.setMove((byte)3, Intent.STRONG_DEBUFF);
+                this.setMove((byte) 3, Intent.STRONG_DEBUFF);
             }
 
         }
@@ -163,12 +171,5 @@ public class BookOfStabbing extends AbstractMonster {
     public void die() {
         super.die();
         CardCrawlGame.sound.play("STAB_BOOK_DEATH");
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("BookOfStabbing");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
     }
 }

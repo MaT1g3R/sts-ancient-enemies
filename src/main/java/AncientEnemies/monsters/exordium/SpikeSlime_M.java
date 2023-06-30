@@ -21,7 +21,6 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 public class SpikeSlime_M extends AbstractMonster {
     public static final String ID = "SpikeSlime_M";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
@@ -30,12 +29,21 @@ public class SpikeSlime_M extends AbstractMonster {
     public static final int TACKLE_DAMAGE = 8;
     public static final int WOUND_COUNT = 1;
     public static final int FRAIL_TURNS = 1;
+    private static final MonsterStrings monsterStrings;
     private static final byte FLAME_TACKLE = 1;
     private static final byte FRAIL_LICK = 4;
     private static final String FRAIL_NAME;
 
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("SpikeSlime_M");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+        FRAIL_NAME = MOVES[0];
+    }
+
     public SpikeSlime_M(float x, float y, int poisonAmount, int newHealth) {
-        super(NAME, "SpikeSlime_M", newHealth, 0.0F, -25.0F, 170.0F, 130.0F, (String)null, x, y);
+        super(NAME, "SpikeSlime_M", newHealth, 0.0F, -25.0F, 170.0F, 130.0F, null, x, y);
         this.damage.add(new DamageInfo(this, 8));
         if (poisonAmount >= 1) {
             this.powers.add(new PoisonPower(this, this, poisonAmount));
@@ -50,7 +58,7 @@ public class SpikeSlime_M extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.BLUNT_HEAVY));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.BLUNT_HEAVY));
                 AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new Wound(), 1));
                 break;
             case 4:
@@ -63,15 +71,15 @@ public class SpikeSlime_M extends AbstractMonster {
 
     protected void getMove(int num) {
         if (num < 30) {
-            if (this.lastTwoMoves((byte)1)) {
-                this.setMove(FRAIL_NAME, (byte)4, Intent.DEBUFF);
+            if (this.lastTwoMoves((byte) 1)) {
+                this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
             } else {
-                this.setMove((byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+                this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
             }
-        } else if (this.lastTwoMoves((byte)4)) {
-            this.setMove((byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+        } else if (this.lastTwoMoves((byte) 4)) {
+            this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
         } else {
-            this.setMove(FRAIL_NAME, (byte)4, Intent.DEBUFF);
+            this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
         }
 
     }
@@ -83,13 +91,5 @@ public class SpikeSlime_M extends AbstractMonster {
             UnlockTracker.hardUnlockOverride("SLIME");
         }
 
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("SpikeSlime_M");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
-        FRAIL_NAME = MOVES[0];
     }
 }

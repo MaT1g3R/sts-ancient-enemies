@@ -30,25 +30,36 @@ import java.util.Iterator;
 
 public class AcidSlime_L extends AbstractMonster {
     public static final String ID = "AcidSlime_L";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
-    private static final String WOUND_NAME;
-    private static final String SPLIT_NAME;
-    private static final String WEAK_NAME;
     public static final int MIN_HP = 62;
     public static final int MAX_HP = 72;
     public static final int W_TACKLE_DMG = 11;
     public static final int N_TACKLE_DMG = 16;
     public static final int WEAK_TURNS = 2;
     public static final int WOUND_COUNT = 2;
+    private static final MonsterStrings monsterStrings;
+    private static final String WOUND_NAME;
+    private static final String SPLIT_NAME;
+    private static final String WEAK_NAME;
     private static final byte WOUND_TACKLE = 1;
     private static final byte NORMAL_TACKLE = 2;
     private static final byte SPLIT = 3;
     private static final byte WEAK_LICK = 4;
-    private float saveX;
-    private float saveY;
+
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("AcidSlime_L");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+        WOUND_NAME = MOVES[0];
+        SPLIT_NAME = MOVES[1];
+        WEAK_NAME = MOVES[2];
+    }
+
+    private final float saveX;
+    private final float saveY;
     private boolean splitTriggered;
 
     public AcidSlime_L(float x, float y, int poisonAmount) {
@@ -56,7 +67,7 @@ public class AcidSlime_L extends AbstractMonster {
     }
 
     public AcidSlime_L(float x, float y, int poisonAmount, int newHealth) {
-        super(NAME, "AcidSlime_L", newHealth, 0.0F, 0.0F, 300.0F, 180.0F, (String)null, x, y);
+        super(NAME, "AcidSlime_L", newHealth, 0.0F, 0.0F, 300.0F, 180.0F, null, x, y);
         this.saveX = x;
         this.saveY = y;
         this.splitTriggered = false;
@@ -77,13 +88,13 @@ public class AcidSlime_L extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.BLUNT_HEAVY));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.BLUNT_HEAVY));
                 AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new Wound(), 2));
                 AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
                 break;
             case 2:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(1), AttackEffect.BLUNT_HEAVY));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(1), AttackEffect.BLUNT_HEAVY));
                 AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
                 break;
             case 3:
@@ -96,7 +107,7 @@ public class AcidSlime_L extends AbstractMonster {
                 AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new AncientEnemies.monsters.exordium.AcidSlime_M(this.saveX - 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
                 AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new AcidSlime_M(this.saveX + 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
                 AbstractDungeon.actionManager.addToBottom(new CanLoseAction());
-                this.setMove(SPLIT_NAME, (byte)3, Intent.UNKNOWN);
+                this.setMove(SPLIT_NAME, (byte) 3, Intent.UNKNOWN);
                 break;
             case 4:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
@@ -108,11 +119,11 @@ public class AcidSlime_L extends AbstractMonster {
 
     public void damage(DamageInfo info) {
         super.damage(info);
-        if (!this.isDying && (float)this.currentHealth < (float)this.maxHealth / 2.0F && this.nextMove != 3 && !this.splitTriggered) {
-            this.setMove(SPLIT_NAME, (byte)3, Intent.UNKNOWN);
+        if (!this.isDying && (float) this.currentHealth < (float) this.maxHealth / 2.0F && this.nextMove != 3 && !this.splitTriggered) {
+            this.setMove(SPLIT_NAME, (byte) 3, Intent.UNKNOWN);
             this.createIntent();
             AbstractDungeon.actionManager.addToBottom(new TextAboveCreatureAction(this, DIALOG[0]));
-            AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, SPLIT_NAME, (byte)3, Intent.UNKNOWN));
+            AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, SPLIT_NAME, (byte) 3, Intent.UNKNOWN));
             this.splitTriggered = true;
         }
 
@@ -120,33 +131,33 @@ public class AcidSlime_L extends AbstractMonster {
 
     protected void getMove(int num) {
         if (num < 30) {
-            if (this.lastTwoMoves((byte)1)) {
+            if (this.lastTwoMoves((byte) 1)) {
                 if (MathUtils.randomBoolean()) {
-                    this.setMove((byte)2, Intent.ATTACK, ((DamageInfo)this.damage.get(1)).base);
+                    this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
                 } else {
-                    this.setMove(WEAK_NAME, (byte)4, Intent.DEBUFF);
+                    this.setMove(WEAK_NAME, (byte) 4, Intent.DEBUFF);
                 }
             } else {
-                this.setMove(WOUND_NAME, (byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+                this.setMove(WOUND_NAME, (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
             }
         } else if (num < 70) {
-            if (this.lastMove((byte)2)) {
+            if (this.lastMove((byte) 2)) {
                 if (MathUtils.randomBoolean(0.4F)) {
-                    this.setMove(WOUND_NAME, (byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+                    this.setMove(WOUND_NAME, (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
                 } else {
-                    this.setMove(WEAK_NAME, (byte)4, Intent.DEBUFF);
+                    this.setMove(WEAK_NAME, (byte) 4, Intent.DEBUFF);
                 }
             } else {
-                this.setMove((byte)2, Intent.ATTACK, ((DamageInfo)this.damage.get(1)).base);
+                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
             }
-        } else if (this.lastTwoMoves((byte)4)) {
+        } else if (this.lastTwoMoves((byte) 4)) {
             if (MathUtils.randomBoolean(0.4F)) {
-                this.setMove(WOUND_NAME, (byte)1, Intent.ATTACK_DEBUFF, ((DamageInfo)this.damage.get(0)).base);
+                this.setMove(WOUND_NAME, (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
             } else {
-                this.setMove((byte)2, Intent.ATTACK, ((DamageInfo)this.damage.get(1)).base);
+                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
             }
         } else {
-            this.setMove(WEAK_NAME, (byte)4, Intent.DEBUFF);
+            this.setMove(WEAK_NAME, (byte) 4, Intent.DEBUFF);
         }
 
     }
@@ -166,19 +177,9 @@ public class AcidSlime_L extends AbstractMonster {
                 return;
             }
 
-            a = (AbstractGameAction)var1.next();
-        } while(!(a instanceof SpawnMonsterAction));
+            a = (AbstractGameAction) var1.next();
+        } while (!(a instanceof SpawnMonsterAction));
 
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("AcidSlime_L");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
-        WOUND_NAME = MOVES[0];
-        SPLIT_NAME = MOVES[1];
-        WEAK_NAME = MOVES[2];
     }
 }
 

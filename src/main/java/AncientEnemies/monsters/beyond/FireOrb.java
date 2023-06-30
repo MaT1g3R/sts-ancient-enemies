@@ -6,10 +6,8 @@ import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.status.Burn;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -28,43 +26,41 @@ public class FireOrb extends AbstractMonster {
     private static final float HB_X_F = 0.0F;
     private static final float HB_Y_F = 0.0F;
     private static final float HB_W = 120.0F;
-
-    public FireOrb(float x, float y) {
-        super(NAME, "FireOrb",
-                MathUtils.random(16, 20), 0.0F, 0.0F, 120.0F, 120.0F, "AncientEnemies/fireball.png", x, y);
-        this.damage.add(new DamageInfo((AbstractCreature) this, 9));
-        this.damage.add(new DamageInfo((AbstractCreature) this, 25));
-    }
-
-    public void setImg() {
-        this.img = ImageMaster.loadImage("AncientEnemies/fireball.png");
-    }
-
     private static final float HB_H = 120.0F;
     private static final int BURN_DMG = 9;
     private static final int EXPLODE_DMG = 25;
     private static final byte BURN = 1;
     private static final byte EXPLODE = 2;
     public boolean firstMove = true;
+    public FireOrb(float x, float y) {
+        super(NAME, "FireOrb",
+                MathUtils.random(16, 20), 0.0F, 0.0F, 120.0F, 120.0F, "AncientEnemies/fireball.png", x, y);
+        this.damage.add(new DamageInfo(this, 9));
+        this.damage.add(new DamageInfo(this, 25));
+    }
+
+    public void setImg() {
+        this.img = ImageMaster.loadImage("AncientEnemies/fireball.png");
+    }
 
     public void takeTurn() {
         switch (this.nextMove) {
             case 1:
-                AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new AnimateFastAttackAction((AbstractCreature) this));
-                AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new DamageAction((AbstractCreature) AbstractDungeon.player, this.damage
+                AbstractDungeon.actionManager.addToBottom(new AnimateFastAttackAction(this));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage
                         .get(0), AbstractGameAction.AttackEffect.FIRE));
-                AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new MakeTempCardInDiscardAction((AbstractCard) new Burn(), 1));
+                AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new Burn(), 1));
                 break;
             case 2:
-                AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new AnimateFastAttackAction((AbstractCreature) this));
-                AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new DamageAction((AbstractCreature) AbstractDungeon.player, this.damage
+                AbstractDungeon.actionManager.addToBottom(new AnimateFastAttackAction(this));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage
                         .get(1), AbstractGameAction.AttackEffect.FIRE));
-                AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new DamageAction((AbstractCreature) this, this.damage
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(this, this.damage
                         .get(1), AbstractGameAction.AttackEffect.FIRE));
                 break;
         }
 
-        AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new RollMoveAction(this));
+        AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
     }
 
 

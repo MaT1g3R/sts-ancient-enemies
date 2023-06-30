@@ -21,11 +21,11 @@ import com.megacrit.cardcrawl.vfx.SpeechBubble;
 
 public class Cultist extends AbstractMonster {
     public static final String ID = "Cultist";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
     public static final String MURDER_ENCOUNTER_KEY = "Murder of Cultists";
+    private static final MonsterStrings monsterStrings;
     private static final String DARK_NAME;
     private static final String INCANTATION_NAME;
     private static final int HP_MAX = 54;
@@ -34,16 +34,26 @@ public class Cultist extends AbstractMonster {
     private static final float HB_Y = 10.0F;
     private static final float HB_W = 230.0F;
     private static final float HB_H = 240.0F;
-    private int ATTACK_DMG;
-    private boolean firstMove;
-    private boolean saidPower;
     private static final int RITUAL_AMT = 3;
     private static final byte DARK_STRIKE = 1;
     private static final byte INCANTATION = 3;
+
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Cultist");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+        DARK_NAME = MOVES[0];
+        INCANTATION_NAME = MOVES[2];
+    }
+
+    private final int ATTACK_DMG;
+    private boolean firstMove;
+    private boolean saidPower;
     private boolean talky;
 
     public Cultist(float x, float y, boolean talk) {
-        super(NAME, "Cultist", MathUtils.random(49, 54), -8.0F, 10.0F, 230.0F, 240.0F, (String)null, x, y);
+        super(NAME, "Cultist", MathUtils.random(49, 54), -8.0F, 10.0F, 230.0F, 240.0F, null, x, y);
         this.ATTACK_DMG = 8;
         this.firstMove = true;
         this.saidPower = false;
@@ -65,7 +75,7 @@ public class Cultist extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.SLASH_HORIZONTAL));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.SLASH_HORIZONTAL));
                 break;
             case 3:
                 int temp = MathUtils.random(1, 10);
@@ -124,19 +134,10 @@ public class Cultist extends AbstractMonster {
     protected void getMove(int num) {
         if (this.firstMove) {
             this.firstMove = false;
-            this.setMove(INCANTATION_NAME, (byte)3, Intent.BUFF);
+            this.setMove(INCANTATION_NAME, (byte) 3, Intent.BUFF);
         } else {
-            this.setMove(DARK_NAME, (byte)1, Intent.ATTACK, ((DamageInfo)this.damage.get(0)).base);
+            this.setMove(DARK_NAME, (byte) 1, Intent.ATTACK, this.damage.get(0).base);
         }
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Cultist");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
-        DARK_NAME = MOVES[0];
-        INCANTATION_NAME = MOVES[2];
     }
 }
 

@@ -25,11 +25,11 @@ import com.megacrit.cardcrawl.vfx.combat.ShockWaveEffect.ShockWaveType;
 
 public class TimeEater extends AbstractMonster {
     public static final String ID = "TimeEater";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
     public static final int STAGE_1_HP = 456;
+    private static final MonsterStrings monsterStrings;
     private static final byte REVERBERATE = 2;
     private static final byte RIPPLE = 3;
     private static final byte HEAD_SLAM = 4;
@@ -40,6 +40,14 @@ public class TimeEater extends AbstractMonster {
     private static final int HEAD_SLAM_DMG = 25;
     private static final int HEAD_SLAM_STICKY = 1;
     private static final int RIPPLE_DEBUFF_TURNS = 1;
+
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("TimeEater");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+    }
+
     private boolean usedHaste = false;
     private boolean firstTurn = true;
 
@@ -71,13 +79,13 @@ public class TimeEater extends AbstractMonster {
             case 2:
                 int i = 0;
 
-                while(true) {
+                while (true) {
                     if (i >= 3) {
                         break label21;
                     }
 
                     AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ShockWaveEffect(this.hb.cX, this.hb.cY, Settings.BLUE_TEXT_COLOR, ShockWaveType.CHAOTIC), 0.75F));
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.FIRE));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.FIRE));
                     ++i;
                 }
             case 3:
@@ -87,7 +95,7 @@ public class TimeEater extends AbstractMonster {
                 break;
             case 4:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(1), AttackEffect.POISON));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(1), AttackEffect.POISON));
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DrawReductionPower(AbstractDungeon.player, 1)));
                 break;
             case 5:
@@ -102,23 +110,23 @@ public class TimeEater extends AbstractMonster {
     protected void getMove(int num) {
         if (this.currentHealth < this.maxHealth / 2 && !this.usedHaste) {
             this.usedHaste = true;
-            this.setMove((byte)5, Intent.BUFF);
+            this.setMove((byte) 5, Intent.BUFF);
         } else if (num < 45) {
-            if (!this.lastTwoMoves((byte)2)) {
-                this.setMove((byte)2, Intent.ATTACK, 6, 3, true);
+            if (!this.lastTwoMoves((byte) 2)) {
+                this.setMove((byte) 2, Intent.ATTACK, 6, 3, true);
             } else {
                 this.getMove(MathUtils.random(50, 99));
             }
         } else if (num < 80) {
-            if (!this.lastMove((byte)4)) {
-                this.setMove((byte)4, Intent.ATTACK_DEBUFF, 25);
+            if (!this.lastMove((byte) 4)) {
+                this.setMove((byte) 4, Intent.ATTACK_DEBUFF, 25);
             } else if (MathUtils.randomBoolean(0.66F)) {
-                this.setMove((byte)2, Intent.ATTACK, 6, 3, true);
+                this.setMove((byte) 2, Intent.ATTACK, 6, 3, true);
             } else {
-                this.setMove((byte)3, Intent.DEFEND_DEBUFF);
+                this.setMove((byte) 3, Intent.DEFEND_DEBUFF);
             }
-        } else if (!this.lastMove((byte)3)) {
-            this.setMove((byte)3, Intent.DEFEND_DEBUFF);
+        } else if (!this.lastMove((byte) 3)) {
+            this.setMove((byte) 3, Intent.DEFEND_DEBUFF);
         } else {
             this.getMove(MathUtils.random(74));
         }
@@ -135,12 +143,5 @@ public class TimeEater extends AbstractMonster {
             UnlockTracker.unlockAchievement("TIME_EATER");
         }
 
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("TimeEater");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
     }
 }

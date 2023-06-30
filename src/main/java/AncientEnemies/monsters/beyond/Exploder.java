@@ -16,11 +16,11 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class Exploder extends AbstractMonster {
     public static final String ID = "Exploder";
-    private static final MonsterStrings monsterStrings;
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
     public static final String ENCOUNTER_NAME = "Ancient Shapes";
+    private static final MonsterStrings monsterStrings;
     private static final int HP_MAX = 54;
     private static final int HP_MIN = 44;
     private static final float HB_X = -8.0F;
@@ -33,8 +33,15 @@ public class Exploder extends AbstractMonster {
     private static final int EXPLODE_BASE = 8;
     private static final int EXPLODE_AMP = 4;
 
+    static {
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Exploder");
+        NAME = monsterStrings.NAME;
+        MOVES = monsterStrings.MOVES;
+        DIALOG = monsterStrings.DIALOG;
+    }
+
     public Exploder(float x, float y) {
-        super(NAME, "Exploder", MathUtils.random(44, 54), -8.0F, -10.0F, 150.0F, 150.0F, (String)null, x, y + 10.0F);
+        super(NAME, "Exploder", MathUtils.random(44, 54), -8.0F, -10.0F, 150.0F, 150.0F, null, x, y + 10.0F);
         this.loadAnimation("images/monsters/theForest/exploder/skeleton.atlas", "images/monsters/theForest/exploder/skeleton.json", 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
@@ -49,7 +56,7 @@ public class Exploder extends AbstractMonster {
         switch (this.nextMove) {
             case 1:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, (DamageInfo)this.damage.get(0), AttackEffect.FIRE));
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AttackEffect.FIRE));
                 break;
             case 2:
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ExplosivePower(this, 4), 4));
@@ -60,23 +67,16 @@ public class Exploder extends AbstractMonster {
 
     protected void getMove(int num) {
         if (num < 66) {
-            if (!this.lastTwoMoves((byte)1)) {
-                this.setMove((byte)1, Intent.ATTACK, ((DamageInfo)this.damage.get(0)).base);
+            if (!this.lastTwoMoves((byte) 1)) {
+                this.setMove((byte) 1, Intent.ATTACK, this.damage.get(0).base);
             } else {
-                this.setMove((byte)2, Intent.BUFF);
+                this.setMove((byte) 2, Intent.BUFF);
             }
-        } else if (!this.lastTwoMoves((byte)2)) {
-            this.setMove((byte)2, Intent.BUFF);
+        } else if (!this.lastTwoMoves((byte) 2)) {
+            this.setMove((byte) 2, Intent.BUFF);
         } else {
-            this.setMove((byte)1, Intent.ATTACK, ((DamageInfo)this.damage.get(0)).base);
+            this.setMove((byte) 1, Intent.ATTACK, this.damage.get(0).base);
         }
 
-    }
-
-    static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Exploder");
-        NAME = monsterStrings.NAME;
-        MOVES = monsterStrings.MOVES;
-        DIALOG = monsterStrings.DIALOG;
     }
 }
