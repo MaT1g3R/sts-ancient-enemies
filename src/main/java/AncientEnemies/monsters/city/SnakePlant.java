@@ -35,7 +35,7 @@ public class SnakePlant extends AbstractMonster {
         loadAnimation("images/monsters/theCity/snakePlant/skeleton.atlas", "images/monsters/theCity/snakePlant/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
 
         this.damage.add(new DamageInfo(this, 7));
@@ -50,10 +50,10 @@ public class SnakePlant extends AbstractMonster {
     public void damage(DamageInfo info) {
         super.damage(info);
         if (info.output > 0) {
-            AnimationState.TrackEntry e = this.state.setAnimation(0, "hit", false);
+            AnimationState.TrackEntry e = this.state.setAnimation(0, "Hit", false);
             this.state.setTimeScale(1.5F);
             e.setTime(e.getEndTime() * 0.3F);
-            this.state.addAnimation(0, "idle", true, 0.0F);
+            this.state.addAnimation(0, "Idle", true, 0.0F);
         }
     }
 

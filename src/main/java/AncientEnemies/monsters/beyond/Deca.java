@@ -117,7 +117,3 @@ public class Deca extends AbstractMonster {
     }
 }
 
-
-
-
-

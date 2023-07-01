@@ -53,14 +53,19 @@ public class Lagavulin extends AbstractMonster {
 
 
         AnimationState.TrackEntry e = null;
+
         if (!this.asleep) {
             this.isOut = true;
             this.isOutTriggered = true;
-            e = this.state.setAnimation(0, "idle_awake", true);
-            updateHitbox(0.0F, -65.0F, 320.0F, 370.0F);
+            e = this.state.setAnimation(0, "Idle_2", true);
+            this.updateHitbox(0.0F, -25.0F, 320.0F, 370.0F);
         } else {
-            e = this.state.setAnimation(0, "idle_asleep", true);
+            e = this.state.setAnimation(0, "Idle_1", true);
         }
+
+        this.stateData.setMix("Attack", "Idle_2", 0.25F);
+        this.stateData.setMix("Hit", "Idle_2", 0.25F);
+        this.stateData.setMix("Idle_1", "Idle_2", 0.5F);
 
         e.setTime(e.getEndTime() * MathUtils.random());
     }
@@ -146,36 +151,29 @@ public class Lagavulin extends AbstractMonster {
         }
     }
 
-
     public void changeState(String stateName) {
         if (stateName.equals("ATTACK")) {
-            this.stateData.setMix("claw_slam", "idle_awake", 0.2F);
-            this.state.setAnimation(0, "claw_slam", false);
-            AnimationState.TrackEntry e = this.state.addAnimation(0, "idle_awake", true, 0.0F);
-            e.setTimeScale(3.0F);
+            this.state.setAnimation(0, "Attack", false);
+            this.state.addAnimation(0, "Idle_2", true, 0.0F);
         } else if (stateName.equals("LURK")) {
-            this.stateData.setMix("idle_asleep", "almost_awake", 0.1F);
-            this.state.setAnimation(0, "almost_awake", true);
+            this.state.setAnimation(0, "Idle_1", false);
+            this.state.addAnimation(0, "Idle_2", true, 0.0F);
         } else if (stateName.equals("DEBUFF")) {
-            this.stateData.setMix("intimidation_claws", "idle_awake", 0.2F);
-            AnimationState.TrackEntry e = this.state.setAnimation(0, "intimidation_claws", false);
-            e.setTimeScale(2.0F);
-            e = this.state.addAnimation(0, "idle_awake", true, 0.0F);
-            e.setTimeScale(3.0F);
+            this.state.setAnimation(0, "Debuff", false);
+            this.state.addAnimation(0, "Idle_2", true, 0.0F);
         } else {
             this.isOut = true;
             updateHitbox(0.0F, -65.0F, 320.0F, 360.0F);
-            AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[3], 0.5F, 2.0F));
-            AbstractDungeon.actionManager.addToBottom(new ReducePowerAction(this, this, "Metallicize", 8));
+            AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new TalkAction(this, DIALOG[3], 0.5F, 2.0F));
+            AbstractDungeon.actionManager.addToBottom((AbstractGameAction) new ReducePowerAction(this, this, "Metallicize", 8));
 
             CardCrawlGame.music.unsilenceBGM();
             AbstractDungeon.scene.fadeOutAmbiance();
             AbstractDungeon.getCurrRoom().playBgmInstantly("ELITE");
-            AnimationState.TrackEntry e = this.state.setAnimation(0, "idle_awake", true);
-            e.setTimeScale(3.0F);
+            this.state.setAnimation(0, "Coming_out", false);
+            this.state.addAnimation(0, "Idle_2", true, 0.0F);
         }
     }
-
 
     public void damage(DamageInfo info) {
         super.damage(info);

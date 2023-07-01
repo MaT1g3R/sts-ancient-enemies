@@ -37,7 +37,7 @@ public class Healer extends AbstractMonster {
         loadAnimation("images/monsters/theCity/healer/skeleton.atlas", "images/monsters/theCity/healer/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
     }
 
@@ -104,9 +104,9 @@ public class Healer extends AbstractMonster {
 
     public void changeState(String key) {
         if (key.equals("STAFF_RAISE")) {
-            this.state.setAnimation(0, "staff_raise", false);
+            this.state.setAnimation(0, "Attack", false);
             this.state.setTimeScale(2.5F);
-            this.state.addAnimation(0, "idle", true, 0.0F);
+            this.state.addAnimation(0, "Idle", true, 0.0F);
         }
     }
 

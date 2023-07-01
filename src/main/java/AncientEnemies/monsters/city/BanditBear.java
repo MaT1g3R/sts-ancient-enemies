@@ -28,7 +28,7 @@ public class BanditBear extends AbstractMonster {
     private static final byte LUNGE = 3;
 
     public BanditBear(float x, float y) {
-        super(NAME, "BanditBear", 40, 0.0F, 0.0F, 180.0F, 200.0F, "images/monsters/theCity/fatBandit.png", x, y);
+        super(NAME, "BanditBear", 40, 0.0F, 0.0F, 180.0F, 200.0F, "AncientEnemies/fatBandit.png", x, y);
 
         this.damage.add(new DamageInfo(this, 18));
         this.damage.add(new DamageInfo(this, 9));

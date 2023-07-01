@@ -23,7 +23,7 @@ public class BanditChild extends AbstractMonster {
     private static final byte POINTY_SPECIAL = 1;
 
     public BanditChild(float x, float y) {
-        super(NAME, "BanditChild", 27, 0.0F, 0.0F, 180.0F, 200.0F, "images/monsters/theCity/littleBandit.png", x, y);
+        super(NAME, "BanditChild", 27, 0.0F, 0.0F, 180.0F, 200.0F, "AncientEnemies/littleBandit.png", x, y);
         this.dialogX = 0.0F * Settings.scale;
         this.dialogY = 50.0F * Settings.scale;
 
