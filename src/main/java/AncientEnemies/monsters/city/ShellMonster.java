@@ -46,13 +46,14 @@ public class ShellMonster extends AbstractMonster {
     private static final byte LIFE_SUCK = 3;
     private static final byte STUNNED = 4;
     private boolean firstMove = true;
+
     public ShellMonster(float x, float y) {
         super(NAME, "Shelled Parasite", MathUtils.random(60, 65), 0.0F, -16.0F, 350.0F, 260.0F, null, x, y);
 
         loadAnimation("images/monsters/theCity/shellMonster/skeleton.atlas", "images/monsters/theCity/shellMonster/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
         e.setTimeScale(1.3F);
 
@@ -118,15 +119,15 @@ public class ShellMonster extends AbstractMonster {
 
 
     public void changeState(String stateName) {
-      if (stateName.equals("ARMOR_BREAK")) {
-        AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
-        AbstractDungeon.actionManager.addToBottom(new WaitAction(0.3F));
-        AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
-        AbstractDungeon.actionManager.addToBottom(new WaitAction(0.3F));
-        AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
-        setMove((byte) 4, Intent.STUN);
-        createIntent();
-      }
+        if (stateName.equals("ARMOR_BREAK")) {
+            AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
+            AbstractDungeon.actionManager.addToBottom(new WaitAction(0.3F));
+            AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
+            AbstractDungeon.actionManager.addToBottom(new WaitAction(0.3F));
+            AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
+            setMove((byte) 4, Intent.STUN);
+            createIntent();
+        }
     }
 
 

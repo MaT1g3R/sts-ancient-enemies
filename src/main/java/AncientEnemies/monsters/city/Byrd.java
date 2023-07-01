@@ -52,13 +52,10 @@ public class Byrd extends AbstractMonster {
     private static final byte CAW = 6;
     private boolean firstMove = true;
     private boolean isFlying = true;
+
     public Byrd(float x) {
         super(NAME, "Byrd",
-
-
                 MathUtils.random(25, 31), 0.0F, 50.0F, 240.0F, 180.0F, null, x,
-
-
                 MathUtils.random(25.0F, 70.0F));
 
         this.damage.add(new DamageInfo(this, 1));

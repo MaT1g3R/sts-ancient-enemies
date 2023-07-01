@@ -46,10 +46,7 @@ public class TorchHead extends AbstractMonster {
         if (this.nextMove == 1) {
             AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage
-
-
                     .get(0), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
-
             AbstractDungeon.actionManager.addToBottom(new SetMoveAction(this, (byte) 1, Intent.ATTACK, 6));
         }
     }

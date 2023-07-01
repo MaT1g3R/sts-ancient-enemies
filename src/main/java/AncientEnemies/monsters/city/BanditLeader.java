@@ -29,7 +29,7 @@ public class BanditLeader extends AbstractMonster {
     private static final byte MOCK = 2;
     private static final byte AGONIZING_SLASH = 3;
     public BanditLeader() {
-        super(NAME, "BanditLeader", 37, 0.0F, 0.0F, 180.0F, 200.0F, "images/monsters/theCity/bossBandit.png");
+        super(NAME, "BanditLeader", 37, 0.0F, 0.0F, 180.0F, 200.0F, "AncientEnemies/bossBandit.png");
         this.dialogX = 0.0F * Settings.scale;
         this.dialogY = 50.0F * Settings.scale;
 

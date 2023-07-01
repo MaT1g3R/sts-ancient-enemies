@@ -29,6 +29,7 @@ public class Centurion extends AbstractMonster {
     private final int FURY_DMG = 6;
     private final int FURY_HITS = 3;
     private final int BLOCK_AMOUNT = 15;
+
     public Centurion(float x, float y) {
         super(NAME, "Centurion", 78, -14.0F, -20.0F, 250.0F, 330.0F, null, x, y);
 
@@ -36,7 +37,7 @@ public class Centurion extends AbstractMonster {
         this.damage.add(new DamageInfo(this, this.FURY_DMG));
 
         loadAnimation("images/monsters/theCity/tank/skeleton.atlas", "images/monsters/theCity/tank/skeleton.json", 1.0F);
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
         this.state.setTimeScale(2.0F);
     }
@@ -90,12 +91,11 @@ public class Centurion extends AbstractMonster {
     public void changeState(String key) {
         switch (key) {
             case "BLOCK_ANIM":
-                this.state.setAnimation(0, "block", false);
-                this.state.addAnimation(0, "idle", true, 0.0F);
+                this.state.addAnimation(0, "Idle", true, 0.0F);
                 break;
             case "MACE_HIT":
-                this.state.setAnimation(0, "mace_hit", false);
-                this.state.addAnimation(0, "idle", true, 0.0F);
+                this.state.setAnimation(0, "Attack", false);
+                this.state.addAnimation(0, "Idle", true, 0.0F);
                 this.state.setTimeScale(2.5F);
                 break;
         }
@@ -146,10 +146,10 @@ public class Centurion extends AbstractMonster {
     public void damage(DamageInfo info) {
         super.damage(info);
         if (info.output > 0) {
-            AnimationState.TrackEntry e = this.state.setAnimation(0, "damaged", false);
+            AnimationState.TrackEntry e = this.state.setAnimation(0, "Hit", false);
             this.state.setTimeScale(1.5F);
             e.setTime(e.getEndTime() * 0.3F);
-            this.state.addAnimation(0, "idle", true, 0.0F);
+            this.state.addAnimation(0, "Idle", true, 0.0F);
         }
     }
 
