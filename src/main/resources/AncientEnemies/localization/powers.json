@@ -4,4 +4,31 @@
     "DESCRIPTIONS": [
       "Gain #b1 less Energy at the start of your turn."
     ]
-  }}
+  },
+  "Explosive": {
+    "NAME": "Explosive",
+    "DESCRIPTIONS": [
+      "On death, deals #b",
+      " damage to you."
+    ]
+  },
+  "Regenerate": {
+    "NAME": "Regenerate",
+    "DESCRIPTIONS": [
+      "Heals #b",
+      " #yHP at the end of its turn."
+    ]
+  },
+  "Thievery": {
+    "NAME": "Thievery",
+    "DESCRIPTIONS": [
+      " steals your #yGold whenever he attacks."
+    ]
+  },
+  "Time Warp": {
+    "NAME": "Time Warp",
+    "DESCRIPTIONS": [
+      "Whenever you play #b12 cards, your turn is ended and Time Eater gains #b3 #yStrength."
+    ]
+  }
+}
