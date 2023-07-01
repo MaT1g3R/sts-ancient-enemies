@@ -1,16 +1,11 @@
 package AncientEnemies.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.bossList;
 
 public class ExordiumPatch {
     public static ArrayList<String> generateExclusions() {
@@ -58,29 +53,5 @@ public class ExordiumPatch {
             __instance.populateMonsterList(monsters, 5, true);
         }
 
-    }
-
-
-    @SpirePatch(clz = Exordium.class, method = "initializeBoss")
-    static class InitializeBoss {
-        public static void Replace(Exordium __instance) {
-            if (!UnlockTracker.isBossSeen("GUARDIAN")) {
-                bossList.add("The Guardian");
-            } else if (!UnlockTracker.isBossSeen("GHOST")) {
-                bossList.add("Hexaghost");
-            } else if (!UnlockTracker.isBossSeen("SLIME")) {
-                bossList.add("Slime Boss");
-            } else {
-                bossList.add("The Guardian");
-                bossList.add("Hexaghost");
-                bossList.add("Slime Boss");
-                Collections.shuffle(bossList);
-            }
-
-            if (Settings.isDemo) {
-                bossList.clear();
-                bossList.add("Hexaghost");
-            }
-        }
     }
 }

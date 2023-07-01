@@ -44,13 +44,14 @@ public class Darkling extends AbstractMonster {
     private static final byte COUNT = 4;
     private static final byte REINCARNATE = 5;
     private boolean firstMove = true;
+
     public Darkling(float x, float y) {
         super(NAME, "Darkling", MathUtils.random(48, 56), 0.0F, -40.0F, 260.0F, 200.0F, null, x, y + 40.0F);
 
         loadAnimation("images/monsters/theForest/darkling/skeleton.atlas", "images/monsters/theForest/darkling/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
         e.setTimeScale(MathUtils.random(1.2F, 2.3F));
 
@@ -96,11 +97,9 @@ public class Darkling extends AbstractMonster {
                 break;
             case 5:
                 if (MathUtils.randomBoolean()) {
-                    AbstractDungeon.actionManager.addToBottom(new SFXAction("DARKLING_REGROW_2",
-                            MathUtils.random(-0.1F, 0.1F)));
+                    AbstractDungeon.actionManager.addToBottom(new SFXAction("DARKLING_REGROW_2", MathUtils.random(-0.1F, 0.1F)));
                 } else {
-                    AbstractDungeon.actionManager.addToBottom(new SFXAction("DARKLING_REGROW_1",
-                            MathUtils.random(-0.1F, 0.1F)));
+                    AbstractDungeon.actionManager.addToBottom(new SFXAction("DARKLING_REGROW_1", MathUtils.random(-0.1F, 0.1F)));
                 }
                 AbstractDungeon.actionManager.addToBottom(new HealAction(this, this, this.maxHealth / 2));
                 AbstractDungeon.actionManager.addToBottom(new ChangeStateAction(this, "REVIVE"));
@@ -204,8 +203,7 @@ public class Darkling extends AbstractMonster {
 
 
     public void die() {
-        if (!(AbstractDungeon.getCurrRoom()).cannotLose)
-            super.die();
+        if (!(AbstractDungeon.getCurrRoom()).cannotLose) super.die();
     }
 }
 

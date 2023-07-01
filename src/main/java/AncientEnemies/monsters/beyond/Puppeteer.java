@@ -18,7 +18,7 @@ import com.megacrit.cardcrawl.powers.WeakPower;
 
 public class Puppeteer extends AbstractMonster {
     public static final String ID = "Puppeteer";
-    public static final String IMAGE = "images/monsters/theCity/puppet.png";
+    public static final String IMAGE = "AncientEnemies/puppet.png";
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Puppeteer");
     public static final String NAME = monsterStrings.NAME;
     public static final String[] MOVES = monsterStrings.MOVES;
@@ -40,14 +40,16 @@ public class Puppeteer extends AbstractMonster {
     private static final byte DANCE = 4;
     private static final int HEX_AMT = 3;
     private boolean firstMove = true, usedDance = false;
+
     public Puppeteer() {
         this(0.0F, 0.0F);
     }
 
     public Puppeteer(float x, float y) {
-        super(NAME, "Puppeteer", 150, 5.0F, 15.0F, 180.0F, 300.0F, "images/monsters/theCity/puppet.png", x, -20.0F + y);
+        super(NAME, "Puppeteer", 150, 5.0F, 15.0F, 180.0F, 300.0F, "AncientEnemies/puppet.png", x, -20.0F + y);
         this.dialogX = -10.0F * Settings.scale;
         this.dialogY = 50.0F * Settings.scale;
+
 
         this.damage.add(new DamageInfo(this, 21));
         this.damage.add(new DamageInfo(this, 8));
@@ -64,27 +66,19 @@ public class Puppeteer extends AbstractMonster {
                 break;
             case 2:
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, 2, true), 2));
-
-
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage
-
-
                         .get(2), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
                 break;
 
             case 3:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage
-
-
                         .get(1), AbstractGameAction.AttackEffect.SLASH_HEAVY));
 
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true), 2));
                 break;
-
-
             case 4:
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DancePower(AbstractDungeon.player, 3)));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new DancePower(AbstractDungeon.player, 3) ));
                 break;
         }
 

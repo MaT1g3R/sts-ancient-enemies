@@ -3,12 +3,9 @@ package AncientEnemies.patches;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.bossList;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.monsterList;
 
 public class TheCityPatch {
@@ -30,7 +27,7 @@ public class TheCityPatch {
     }
 
     @SpirePatch(clz = TheCity.class, method = "generateMonsters")
-    static class MonsterPatch {
+    static class GenerateMonsters {
         public static void Replace(TheCity __instance) {
             ArrayList<MonsterInfo> monsters = new ArrayList<>();
             monsters.add(new MonsterInfo("SphericGuardian", 2.0F));
@@ -62,24 +59,4 @@ public class TheCityPatch {
             __instance.populateMonsterList(monsters, 5, true);
         }
     }
-
-
-    @SpirePatch(clz = TheCity.class, method = "initializeBoss")
-    static class InitializeBoss {
-        public static void Replace(TheCity __instance) {
-            if (!UnlockTracker.isBossSeen("CHAMP")) {
-                bossList.add("Champ");
-            } else if (!UnlockTracker.isBossSeen("AUTOMATON")) {
-                bossList.add("Automaton");
-            } else if (!UnlockTracker.isBossSeen("COLLECTOR")) {
-                bossList.add("Collector");
-            } else {
-                bossList.add("Automaton");
-                bossList.add("Collector");
-                bossList.add("Champ");
-                Collections.shuffle(bossList);
-            }
-        }
-    }
-
 }

@@ -38,7 +38,7 @@ public class OrbWalker extends AbstractMonster {
         loadAnimation("images/monsters/theForest/orbWalker/skeleton.atlas", "images/monsters/theForest/orbWalker/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
     }
 

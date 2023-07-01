@@ -111,7 +111,7 @@ public class MonsterHelperPatch {
         }
     }
 
-    @SpirePatch2(clz = MonsterHelper.class, method = "getEncounter", paramtypez = { String.class })
+    @SpirePatch2(clz = MonsterHelper.class, method = "getEncounter", paramtypez = {String.class})
     static class GetEncounter {
         public static SpireReturn<MonsterGroup> Prefix(String key) {
             MonsterGroup monsterGroup = getEncounter(key);
@@ -155,9 +155,9 @@ public class MonsterHelperPatch {
         }
 
         private static MonsterGroup bottomHumanoid() {
-            AbstractMonster[] monsters = new AbstractMonster[] {
+            AbstractMonster[] monsters = new AbstractMonster[]{
                     bottomGetWeakWildlife(randomXOffset(-160.0F), randomYOffset(20.0F)),
-                    bottomGetStrongHumanoid(randomXOffset(130.0F), randomYOffset(20.0F)) };
+                    bottomGetStrongHumanoid(randomXOffset(130.0F), randomYOffset(20.0F))};
             return new MonsterGroup(monsters);
         }
 
@@ -218,10 +218,10 @@ public class MonsterHelperPatch {
             switch (key) {
                 case "FungiBeast":
                     return new MonsterGroup(
-                            new AbstractMonster[] { new FungiBeast(-400.0F, 30.0F), new FungiBeast(-40.0F, 20.0F) });
+                            new AbstractMonster[]{new FungiBeast(-400.0F, 30.0F), new FungiBeast(-40.0F, 20.0F)});
                 case "The Mushroom Lair":
-                    return new MonsterGroup(new AbstractMonster[] { new FungiBeast(-450.0F, 30.0F),
-                            new FungiBeast(-145.0F, 20.0F), new FungiBeast(180.0F, 15.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new FungiBeast(-450.0F, 30.0F),
+                            new FungiBeast(-145.0F, 20.0F), new FungiBeast(180.0F, 15.0F)});
                 case "JawWorm":
                     return new MonsterGroup(new JawWorm(0.0F, 25.0F));
                 case "Cultist":
@@ -237,8 +237,8 @@ public class MonsterHelperPatch {
                 case "Lagavulin Dead Adventurers Fight":
                     return new MonsterGroup(new Lagavulin(false));
                 case "Sentries":
-                    return new MonsterGroup(new AbstractMonster[] { new Sentry(-330.0F, 25.0F),
-                            new Sentry(-85.0F, 10.0F), new Sentry(140.0F, 30.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new Sentry(-330.0F, 25.0F),
+                            new Sentry(-85.0F, 10.0F), new Sentry(140.0F, 30.0F)});
                 case "Slaver":
                     return new MonsterGroup(getSlaver(0.0F, 0.0F));
                 case "Blue Slaver":
@@ -261,8 +261,8 @@ public class MonsterHelperPatch {
                 case "Hexaghost":
                     return new MonsterGroup(new Hexaghost());
                 case "Louse":
-                    return new MonsterGroup(new AbstractMonster[] {
-                            getLouse(-350.0F, 25.0F), getLouse(-125.0F, 10.0F), getLouse(80.0F, 30.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{
+                            getLouse(-350.0F, 25.0F), getLouse(-125.0F, 10.0F), getLouse(80.0F, 30.0F)});
                 case "Exordium Wildlife":
                     return bottomWildlife();
                 case "Exordium Thugs":
@@ -270,19 +270,19 @@ public class MonsterHelperPatch {
                 case "SphericGuardian":
                     return new MonsterGroup(new SphericGuardian());
                 case "Murder of Cultists":
-                    return new MonsterGroup(new AbstractMonster[] { new Cultist(200.0F, -5.0F),
-                            new Cultist(-130.0F, 15.0F, false), new Cultist(-465.0F, -20.0F, false) });
+                    return new MonsterGroup(new AbstractMonster[]{new Cultist(200.0F, -5.0F),
+                            new Cultist(-130.0F, 15.0F, false), new Cultist(-465.0F, -20.0F, false)});
                 case "Automaton":
                     return new MonsterGroup(new BronzeAutomaton());
                 case "City Looters":
                     return new MonsterGroup(
-                            new AbstractMonster[] { new Looter(-200.0F, 15.0F), new Mugger(80.0F, 0.0F) });
+                            new AbstractMonster[]{new Looter(-200.0F, 15.0F), new Mugger(80.0F, 0.0F)});
                 case "4_Byrds":
-                    return new MonsterGroup(new AbstractMonster[] { new Byrd(-470.0F), new Byrd(-210.0F),
-                            new Byrd(50.0F), new Byrd(310.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new Byrd(-470.0F), new Byrd(-210.0F),
+                            new Byrd(50.0F), new Byrd(310.0F)});
                 case "3_Byrds":
                     return new MonsterGroup(
-                            new AbstractMonster[] { new Byrd(-360.0F), new Byrd(-80.0F), new Byrd(200.0F) });
+                            new AbstractMonster[]{new Byrd(-360.0F), new Byrd(-80.0F), new Byrd(200.0F)});
                 case "Champ":
                     return new MonsterGroup(new Champ());
                 case "Chosen":
@@ -291,11 +291,11 @@ public class MonsterHelperPatch {
                     return new MonsterGroup(new TheCollector());
                 case "Masked Bandits":
                 case "The Red Mask Bandits":
-                    return new MonsterGroup(new AbstractMonster[] { new BanditLeader(), new BanditBear(-200.0F, 0.0F),
-                            new BanditChild(200.0F, 0.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new BanditLeader(), new BanditBear(-200.0F, 0.0F),
+                            new BanditChild(200.0F, 0.0F)});
                 case "HealerTank":
                     return new MonsterGroup(
-                            new AbstractMonster[] { new Centurion(-200.0F, 15.0F), new Healer(120.0F, 0.0F) });
+                            new AbstractMonster[]{new Centurion(-200.0F, 15.0F), new Healer(120.0F, 0.0F)});
                 case "Shelled Parasite":
                     return new MonsterGroup(new ShellMonster());
                 case "Snecko":
@@ -303,40 +303,40 @@ public class MonsterHelperPatch {
                 case "BookOfStabbing":
                     return new MonsterGroup(new BookOfStabbing());
                 case "SlaverBoss":
-                    return new MonsterGroup(new AbstractMonster[] { new SlaverBlue(-385.0F, -15.0F),
-                            new SlaverBoss(-133.0F, 0.0F), new SlaverRed(125.0F, -30.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new SlaverBlue(-385.0F, -15.0F),
+                            new SlaverBoss(-133.0F, 0.0F), new SlaverRed(125.0F, -30.0F)});
                 case "Gremlin Leader Combat":
-                    return new MonsterGroup(new AbstractMonster[] {
+                    return new MonsterGroup(new AbstractMonster[]{
                             spawnGremlin(-366.0F, -4.0F),
-                            spawnGremlin(-170.0F, 6.0F), new GremlinLeader() });
+                            spawnGremlin(-170.0F, 6.0F), new GremlinLeader()});
                 case "Chosen and Flock":
-                    return new MonsterGroup(new AbstractMonster[] { new Chosen(80.0F, 0.0F), new Byrd(-170.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new Chosen(80.0F, 0.0F), new Byrd(-170.0F)});
                 case "City Thugs":
                     return new MonsterGroup(
-                            new AbstractMonster[] { getSlaver(-355.0F, -30.0F), new ShellMonster(50.0F, 10.0F) });
+                            new AbstractMonster[]{getSlaver(-355.0F, -30.0F), new ShellMonster(50.0F, 10.0F)});
                 case "City Ancients":
                     return new MonsterGroup(
-                            new AbstractMonster[] { new Sentry(-305.0F, 30.0F), new SphericGuardian() });
+                            new AbstractMonster[]{new Sentry(-305.0F, 30.0F), new SphericGuardian()});
                 case "SnakePlant":
                     return new MonsterGroup(new SnakePlant(-30.0F, -30.0F));
                 case "Flame Bruiser (One Orb)":
-                    return new MonsterGroup(new AbstractMonster[] { new FlameBruiser(), new FireOrb(180.0F, 50.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new FlameBruiser(), new FireOrb(180.0F, 50.0F)});
                 case "Flame Bruiser (Two Orb)":
-                    return new MonsterGroup(new AbstractMonster[] { new FlameBruiser(), new FireOrb(180.0F, 50.0F),
-                            new FireOrb(-180.0F, 80.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new FlameBruiser(), new FireOrb(180.0F, 50.0F),
+                            new FireOrb(-180.0F, 80.0F)});
                 case "Darkling Encounter":
-                    return new MonsterGroup(new AbstractMonster[] { new Darkling(-440.0F, 10.0F),
-                            new Darkling(-140.0F, 30.0F), new Darkling(180.0F, -5.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new Darkling(-440.0F, 10.0F),
+                            new Darkling(-140.0F, 30.0F), new Darkling(180.0F, -5.0F)});
                 case "GiantHead":
                     return new MonsterGroup(new GiantHead());
                 case "MultipleMaws":
-                    return new MonsterGroup(new AbstractMonster[] { new Maw(-350.0F, 15.0F), new Maw(120.0F, -20.0F) });
+                    return new MonsterGroup(new AbstractMonster[]{new Maw(-350.0F, 15.0F), new Maw(120.0F, -20.0F)});
                 case "Maw":
                     return new MonsterGroup(new Maw(-70.0F, 20.0F));
                 case "Serpent":
                     return new MonsterGroup(new Serpent());
                 case "SPHERE_COMBAT":
-                    return new MonsterGroup(new AbstractMonster[] {
+                    return new MonsterGroup(new AbstractMonster[]{
                             getAncientShape(-475.0F, 10.0F), new OrbWalker(150.0F, 30.0F),
                             getAncientShape(-250.0F, 0.0F)
                     });
@@ -344,7 +344,7 @@ public class MonsterHelperPatch {
                     return new MonsterGroup(new OrbWalker(-30.0F, 30.0F));
                 case "Double Orb Walker":
                     return new MonsterGroup(
-                            new AbstractMonster[] { new OrbWalker(150.0F, 40.0F), new OrbWalker(-250.0F, 10.0F) });
+                            new AbstractMonster[]{new OrbWalker(150.0F, 40.0F), new OrbWalker(-250.0F, 10.0F)});
                 case "Puppeteer":
                     return new MonsterGroup(new Puppeteer());
                 case "Ancient Shapes":
@@ -354,12 +354,12 @@ public class MonsterHelperPatch {
                 case "Nemesis":
                     return new MonsterGroup(new Nemesis());
                 case "Awakened One":
-                    return new MonsterGroup(new AbstractMonster[] { new AwakenedOne(100.0F, 15.0F),
-                            new Cultist(-298.0F, -10.0F, false), new Cultist(-590.0F, 10.0F, false) });
+                    return new MonsterGroup(new AbstractMonster[]{new AwakenedOne(100.0F, 15.0F),
+                            new Cultist(-298.0F, -10.0F, false), new Cultist(-590.0F, 10.0F, false)});
                 case "Time Eater":
                     return new MonsterGroup(new TimeEater());
                 case "Donu and Deca":
-                    return new MonsterGroup(new AbstractMonster[] { new Deca(), new Donu() });
+                    return new MonsterGroup(new AbstractMonster[]{new Deca(), new Donu()});
             }
 
             logger.info("Unspecified key: " + key + " in MonsterHelper.");

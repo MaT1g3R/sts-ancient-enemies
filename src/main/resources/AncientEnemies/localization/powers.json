@@ -30,5 +30,14 @@
     "DESCRIPTIONS": [
       "Whenever you play #b12 cards, your turn is ended and Time Eater gains #b3 #yStrength."
     ]
+  },
+  "Dance Puppet": {
+    "NAME": "Dance Puppet",
+    "DESCRIPTIONS": [
+      "Whenever you play a non-Skill card, take #b",
+      " damage. (Card type changes each turn)",
+      "Whenever you play a non-Attack card, take #b",
+      "+1 Dance Puppet"
+    ]
   }
 }

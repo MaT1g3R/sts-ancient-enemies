@@ -41,7 +41,7 @@ public class Deca extends AbstractMonster {
         loadAnimation("images/monsters/theForest/deca/skeleton.atlas", "images/monsters/theForest/deca/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
 
         this.type = AbstractMonster.EnemyType.BOSS;
