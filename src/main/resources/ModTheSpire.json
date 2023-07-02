@@ -3,7 +3,7 @@
   "name": "Ancient Enemies",
   "author_list": ["Byron, vmService"],
   "description": "Reverts all enemy encounters to their November 2017 versions.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sts_version": "12-18-2022",
   "mts_version": "3.6.3"
 }
