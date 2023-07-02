@@ -26,8 +26,3 @@
      this.description = Looter.NAME + DESCRIPTIONS[0];
    }
  }
-
-
-
- 
- 

@@ -1,5 +1,6 @@
 package AncientEnemies.monsters.city;
 
+import AncientEnemies.powers.ThieveryPower;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
@@ -13,7 +14,6 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.ThieveryPower;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
 public class Mugger extends AbstractMonster {
@@ -54,7 +54,7 @@ public class Mugger extends AbstractMonster {
 
 
     public void usePreBattleAction() {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ThieveryPower(this, -1)));
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new ThieveryPower(this)));
     }
 
 
