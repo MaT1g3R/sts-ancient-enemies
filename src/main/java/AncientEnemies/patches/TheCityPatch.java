@@ -56,7 +56,7 @@ public class TheCityPatch {
             monsters.add(new MonsterInfo("Gremlin Leader Combat", 1.0F));
 
             MonsterInfo.normalizeWeights(monsters);
-            __instance.populateMonsterList(monsters, 5, true);
+            __instance.populateMonsterList(monsters, 10, true);
         }
     }
 }

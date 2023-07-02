@@ -50,8 +50,7 @@ public class ExordiumPatch {
             monsters.add(new MonsterInfo("Lagavulin", 1.0F));
             monsters.add(new MonsterInfo("Sentries", 1.0F));
             MonsterInfo.normalizeWeights(monsters);
-            __instance.populateMonsterList(monsters, 5, true);
+            __instance.populateMonsterList(monsters, 10, true);
         }
-
     }
 }

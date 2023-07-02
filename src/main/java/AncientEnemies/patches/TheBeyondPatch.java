@@ -53,7 +53,7 @@ public class TheBeyondPatch {
             monsters.add(new MonsterInfo("GiantHead", 2.0F));
             MonsterInfo.normalizeWeights(monsters);
 
-            __instance.populateMonsterList(monsters, 5, true);
+            __instance.populateMonsterList(monsters, 10, true);
         }
     }
 }
