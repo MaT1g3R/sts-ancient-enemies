@@ -42,7 +42,7 @@ public class Donu extends AbstractMonster {
         loadAnimation("images/monsters/theForest/donu/skeleton.atlas", "images/monsters/theForest/donu/skeleton.json", 1.0F);
 
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
         e.setTimeScale(0.66F);
         this.type = AbstractMonster.EnemyType.BOSS;
