@@ -18,7 +18,6 @@ public class DarknessPower extends AbstractPower {
         powerStrings = CardCrawlGame.languagePack.getPowerStrings("Darkness");
         NAME = powerStrings.NAME;
         DESCRIPTIONS = powerStrings.DESCRIPTIONS;
-        // FIGURE OUT HOW TO CONNECT TO OWN JSON
     }
 
     public DarknessPower(int energyAmt) {

@@ -19,6 +19,13 @@
       " #yHP at the end of its turn."
     ]
   },
+  "Repulse": {
+    "NAME": "Repulse",
+    "DESCRIPTIONS": [
+      "Whenever ",
+      " receives attack damage, puts a #yWound into your hand."
+    ]
+  },
   "Thievery": {
     "NAME": "Thievery",
     "DESCRIPTIONS": [
