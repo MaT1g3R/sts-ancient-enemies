@@ -144,7 +144,37 @@ public class AcidSlime_L extends AbstractMonster {
     }
 
     protected void getMove(int num) {
-        if (num < 30) {
+        if (AncientEnemies.afterAscension(17)) {
+            if (num < 40) {
+                if (this.lastTwoMoves((byte) 1)) {
+                    if (MathUtils.randomBoolean(0.6F)) {
+                        this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
+                    } else {
+                        this.setMove(WEAK_NAME, (byte) 4, Intent.DEBUFF);
+                    }
+                } else {
+                    this.setMove(WOUND_NAME, (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+                }
+            } else if (num < 70) {
+                if (this.lastTwoMoves((byte) 2)) {
+                    if (MathUtils.randomBoolean(0.6F)) {
+                        this.setMove(WOUND_NAME, (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+                    } else {
+                        this.setMove(WEAK_NAME, (byte) 4, Intent.DEBUFF);
+                    }
+                } else {
+                    this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
+                }
+            } else if (this.lastMove((byte) 4)) {
+                if (MathUtils.randomBoolean(0.4F)) {
+                    this.setMove(WOUND_NAME, (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+                } else {
+                    this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
+                }
+            } else {
+                this.setMove(WEAK_NAME, (byte) 4, Intent.DEBUFF);
+            }
+        } else if (num < 30) {
             if (this.lastTwoMoves((byte) 1)) {
                 if (MathUtils.randomBoolean()) {
                     this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
