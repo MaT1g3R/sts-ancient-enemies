@@ -147,3 +147,4 @@ build.gradle.kts
 old-spire
 bin/
 ancient-enemies.code-workspace
+workshop-upload
