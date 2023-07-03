@@ -68,7 +68,7 @@ public class AcidSlime_L extends AbstractMonster {
         if (AncientEnemies.afterAscension(7)) {
             this.setHp(68, 72);
         } else {
-            this.setHp(65, 69);
+            this.setHp(62, 72);
         }
     }
 
