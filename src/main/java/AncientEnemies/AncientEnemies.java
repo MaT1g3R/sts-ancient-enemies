@@ -8,6 +8,7 @@ import basemod.interfaces.PostInitializeSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -60,5 +61,9 @@ public class AncientEnemies implements EditStringsSubscriber, PostInitializeSubs
         });
         settingsPanel.addUIElement(ascensionButton);
         BaseMod.registerModBadge(ImageMaster.loadImage("AncientEnemies/modBadge.png"), "AncientEnemies", "Byron, vmService", "Reverts all enemy encounters to their November 2017 versions.", settingsPanel);
+    }
+
+    public static boolean afterAscension(int level) {
+        return ascension() && AbstractDungeon.ascensionLevel >= level;
     }
 }

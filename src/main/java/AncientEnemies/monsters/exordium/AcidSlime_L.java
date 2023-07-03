@@ -1,5 +1,6 @@
 package AncientEnemies.monsters.exordium;
 
+import AncientEnemies.AncientEnemies;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -63,7 +64,12 @@ public class AcidSlime_L extends AbstractMonster {
     private boolean splitTriggered;
 
     public AcidSlime_L(float x, float y, int poisonAmount) {
-        this(x, y, poisonAmount, MathUtils.random(62, 72));
+        this(x, y, poisonAmount, 69);
+        if (AncientEnemies.afterAscension(7)) {
+            this.setHp(68, 72);
+        } else {
+            this.setHp(65, 69);
+        }
     }
 
     public AcidSlime_L(float x, float y, int poisonAmount, int newHealth) {
@@ -71,9 +77,17 @@ public class AcidSlime_L extends AbstractMonster {
         this.saveX = x;
         this.saveY = y;
         this.splitTriggered = false;
-        this.damage.add(new DamageInfo(this, 11));
-        this.damage.add(new DamageInfo(this, 16));
+
+        if (AncientEnemies.afterAscension(2)) {
+            this.damage.add(new DamageInfo(this, 12));
+            this.damage.add(new DamageInfo(this, 18));
+        } else {
+            this.damage.add(new DamageInfo(this, 11));
+            this.damage.add(new DamageInfo(this, 16));
+        }
+
         this.powers.add(new SplitPower(this));
+
         if (poisonAmount >= 1) {
             this.powers.add(new PoisonPower(this, this, poisonAmount));
         }
@@ -104,7 +118,7 @@ public class AcidSlime_L extends AbstractMonster {
                 AbstractDungeon.actionManager.addToBottom(new SuicideAction(this, false));
                 AbstractDungeon.actionManager.addToBottom(new WaitAction(1.0F));
                 AbstractDungeon.actionManager.addToBottom(new SFXAction("SLIME_SPLIT"));
-                AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new AncientEnemies.monsters.exordium.AcidSlime_M(this.saveX - 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
+                AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new AcidSlime_M(this.saveX - 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
                 AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(new AcidSlime_M(this.saveX + 134.0F, this.saveY + MathUtils.random(-4.0F, 4.0F), 0, this.currentHealth), false));
                 AbstractDungeon.actionManager.addToBottom(new CanLoseAction());
                 this.setMove(SPLIT_NAME, (byte) 3, Intent.UNKNOWN);
