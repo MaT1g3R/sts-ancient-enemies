@@ -1,5 +1,6 @@
 package AncientEnemies.monsters.exordium;
 
+import AncientEnemies.AncientEnemies;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -44,7 +45,13 @@ public class SpikeSlime_M extends AbstractMonster {
 
     public SpikeSlime_M(float x, float y, int poisonAmount, int newHealth) {
         super(NAME, "SpikeSlime_M", newHealth, 0.0F, -25.0F, 170.0F, 130.0F, null, x, y);
-        this.damage.add(new DamageInfo(this, 8));
+
+        if (AncientEnemies.afterAscension(2)) {
+            this.damage.add(new DamageInfo(this, 10));
+        } else {
+            this.damage.add(new DamageInfo(this, 8));
+        }
+
         if (poisonAmount >= 1) {
             this.powers.add(new PoisonPower(this, this, poisonAmount));
         }
@@ -70,7 +77,19 @@ public class SpikeSlime_M extends AbstractMonster {
     }
 
     protected void getMove(int num) {
-        if (num < 30) {
+        if (AncientEnemies.afterAscension(17)) {
+            if (num < 30) {
+                if (this.lastTwoMoves((byte) 1)) {
+                    this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
+                } else {
+                    this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+                }
+            } else if (this.lastMove((byte) 4)) {
+                this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+            } else {
+                this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
+            }
+        } else if (num < 30) {
             if (this.lastTwoMoves((byte) 1)) {
                 this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
             } else {
@@ -90,6 +109,5 @@ public class SpikeSlime_M extends AbstractMonster {
             this.onBossVictoryLogic();
             UnlockTracker.hardUnlockOverride("SLIME");
         }
-
     }
 }

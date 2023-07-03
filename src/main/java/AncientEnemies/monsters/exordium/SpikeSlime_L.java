@@ -1,5 +1,6 @@
 package AncientEnemies.monsters.exordium;
 
+import AncientEnemies.AncientEnemies;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -60,6 +61,11 @@ public class SpikeSlime_L extends AbstractMonster {
 
     public SpikeSlime_L(float x, float y, int poisonAmount) {
         this(x, y, poisonAmount, MathUtils.random(62, 72));
+        if (AncientEnemies.afterAscension(7)) {
+            this.setHp(67, 73);
+        } else {
+            this.setHp(62, 72);
+        }
     }
 
     public SpikeSlime_L(float x, float y, int poisonAmount, int newHealth) {
@@ -68,8 +74,15 @@ public class SpikeSlime_L extends AbstractMonster {
         this.saveX = x;
         this.saveY = y;
         this.splitTriggered = false;
-        this.damage.add(new DamageInfo(this, 16));
+
+        if (AncientEnemies.afterAscension(2)) {
+            this.damage.add(new DamageInfo(this, 18));
+        } else {
+            this.damage.add(new DamageInfo(this, 16));
+        }
+
         this.powers.add(new SplitPower(this));
+
         if (poisonAmount >= 1) {
             this.powers.add(new PoisonPower(this, this, poisonAmount));
         }
@@ -102,7 +115,11 @@ public class SpikeSlime_L extends AbstractMonster {
                 break;
             case 4:
                 AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 2, true), 2));
+                if (AncientEnemies.afterAscension(17)) {
+                    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 3, true), 3));
+                } else {
+                    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 2, true), 2));
+                }
         }
 
         AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
@@ -123,10 +140,24 @@ public class SpikeSlime_L extends AbstractMonster {
     protected void getMove(int num) {
         if (this.firstTurn) {
             this.firstTurn = false;
-            num = MathUtils.random(30, 99);
+            if (!AncientEnemies.afterAscension(17)) {
+                num = MathUtils.random(30, 99);
+            }
         }
 
-        if (num < 30) {
+        if (AncientEnemies.afterAscension(17)) {
+            if (num < 30) {
+                if (this.lastTwoMoves((byte) 1)) {
+                    this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
+                } else {
+                    this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+                }
+            } else if (this.lastMove((byte) 4)) {
+                this.setMove((byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
+            } else {
+                this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
+            }
+        } else if (num < 30) {
             if (this.lastTwoMoves((byte) 1)) {
                 this.setMove(FRAIL_NAME, (byte) 4, Intent.DEBUFF);
             } else {
