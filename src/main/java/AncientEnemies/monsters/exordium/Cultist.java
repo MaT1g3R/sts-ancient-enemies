@@ -1,6 +1,7 @@
 package AncientEnemies.monsters.exordium;
 
 
+import AncientEnemies.AncientEnemies;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -38,6 +39,8 @@ public class Cultist extends AbstractMonster {
     private static final byte DARK_STRIKE = 1;
     private static final byte INCANTATION = 3;
 
+    private int ritualAmount;
+
     static {
         monsterStrings = CardCrawlGame.languagePack.getMonsterStrings("Cultist");
         NAME = monsterStrings.NAME;
@@ -58,8 +61,22 @@ public class Cultist extends AbstractMonster {
         this.firstMove = true;
         this.saidPower = false;
         this.talky = true;
+
+        if (AncientEnemies.afterAscension(7)) {
+            this.setHp(50, 56);
+        } else {
+            this.setHp(49, 54);
+        }
+
         this.dialogX = -50.0F * Settings.scale;
         this.dialogY = 50.0F * Settings.scale;
+
+        if (AncientEnemies.afterAscension(2)) {
+            this.ritualAmount = 4;
+        } else {
+            this.ritualAmount = 3;
+        }
+
         this.damage.add(new DamageInfo(this, this.ATTACK_DMG));
         this.talky = talk;
         this.loadAnimation("images/monsters/theBottom/cultist/skeleton.atlas", "images/monsters/theBottom/cultist/skeleton.json", 1.0F);
@@ -89,7 +106,11 @@ public class Cultist extends AbstractMonster {
                     }
                 }
 
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RitualPower(this, 3, false)));
+                if (AncientEnemies.afterAscension(17)) {
+                    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RitualPower(this, this.ritualAmount + 1, false)));
+                } else {
+                    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new RitualPower(this, this.ritualAmount, false)));
+                }
         }
 
         AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
